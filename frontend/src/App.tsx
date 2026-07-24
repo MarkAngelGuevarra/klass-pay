@@ -374,10 +374,42 @@ export default function App() {
       )}
 
       {!isConnected && (
-        <div className="card" style={{ textAlign: 'center' }}>
-          <h2>Welcome to KlassPay</h2>
-          <p style={{ color: 'var(--text-muted)' }}>Please connect your Stellar wallet to get started.</p>
-        </div>
+        <>
+          <div className="card" style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Welcome to KlassPay</h2>
+            <p style={{ color: 'var(--text-muted)' }}>The premium split-payment engine for students. Collect funds with zero gas fees.</p>
+            <button className="btn" style={{ width: 'auto', padding: '0.8rem 2rem', marginTop: '1.5rem', background: 'linear-gradient(90deg, #005CEE, #8B5CF6)' }} onClick={connect}>
+              Connect Wallet to Start
+            </button>
+          </div>
+          
+          <div className="card" style={{ background: 'var(--surface)' }}>
+            <h3 style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '1.5rem' }}>📖 How It Works</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{ fontSize: '2.5rem', lineHeight: '1' }}>1️⃣</div>
+                <div>
+                  <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1.1rem' }}>Create a Bill</h4>
+                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.5' }}>Connect your Freighter wallet and create a split-payment bill for your class (e.g., "Graduation Party"). Set your target amount in XLM.</p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{ fontSize: '2.5rem', lineHeight: '1' }}>2️⃣</div>
+                <div>
+                  <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1.1rem' }}>Share with Classmates</h4>
+                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.5' }}>Copy the unique bill link and send it to your class group chat. Students can join instantly and pay their share without worrying about network gas fees!</p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{ fontSize: '2.5rem', lineHeight: '1' }}>3️⃣</div>
+                <div>
+                  <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1.1rem' }}>Track & Withdraw to GCash</h4>
+                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.5' }}>Watch the live progress bar fill up on the blockchain. Once fully funded, instantly offramp the balance directly to your GCash account in PHP.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
       )}
 
       {isConnected && currentBillId === null && (
