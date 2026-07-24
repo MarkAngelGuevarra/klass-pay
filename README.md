@@ -3,7 +3,7 @@
 > **A split-payment app for students built on Stellar & Soroban.**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-klass--pay.vercel.app-blue?style=for-the-badge&logo=vercel)](https://klass-pay.vercel.app/)
-[![Stellar Mainnet](https://img.shields.io/badge/Stellar%20Mainnet-Live-success?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/public/contract/CDQVUENXMPWVLDOJKAW7U3VHDOCMACBIUC7E5TIDIJXEOB4TOKT4KXOE)
+[![Stellar Mainnet](https://img.shields.io/badge/Stellar%20Mainnet-Live-success?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
 [![CSAT Score](https://img.shields.io/badge/CSAT-4.8%2F5.0-orange?style=for-the-badge)](https://docs.google.com/spreadsheets/d/1wVUU7dA9LYpTh3xD6160iHV0KXrAzl-5a9QBc02mbXk/edit?usp=sharing)
 [![Closed Beta Users](https://img.shields.io/badge/Closed%20Beta%20Users-115%2B-purple?style=for-the-badge)](#-user-onboarding)
 
@@ -14,7 +14,7 @@
 | Artifact | Link | Description |
 | :--- | :--- | :--- |
 | 🌐 **Live Demo Application** | [klass-pay.vercel.app](https://klass-pay.vercel.app/) | Production dApp on Vercel |
-| 📜 **Stellar Mainnet Contract** | [`CDQVUENXMPWVLDOJKAW7U3VHDOCMACBIUC7E5TIDIJXEOB4TOKT4KXOE`](https://stellar.expert/explorer/public/contract/CDQVUENXMPWVLDOJKAW7U3VHDOCMACBIUC7E5TIDIJXEOB4TOKT4KXOE) | Verified Soroban Mainnet Contract |
+| 📜 **Stellar Mainnet Contract** | [`CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ) | Verified Soroban Mainnet Contract |
 | 🧪 **Stellar Testnet Contract** | `CCFICKTKIXYLMDJXBDHSWRUR632ZIB22WAPDAKVQKG3YI6M7RMNCE2FE` | Testnet Deployment Contract |
 | 🔑 **Fee Sponsor Wallet** | [`GATNUOK4FKUSLNDKUY2S5ZJ6ERUSFFICQFVIUQPUKFMG5236BHA5PF3S`](https://stellar.expert/explorer/public/account/GATNUOK4FKUSLNDKUY2S5ZJ6ERUSFFICQFVIUQPUKFMG5236BHA5PF3S) | Mainnet Gasless Fee Sponsor Account |
 | 🎨 **Pitch Deck** | [View on Canva](https://canva.link/au4fo5k0t0do5ew) | Official Product Presentation |
@@ -23,7 +23,7 @@
 | ✍️ **Dev.to Technical Article** | [Read on Dev.to](https://dev.to/markyy0411/building-klasspay-a-gasless-split-payment-engine-on-stellar-soroban-85p) | Soroban & Fee Sponsorship Deep-Dive |
 | 🐦 **Twitter Launch Announcement** | [View on X/Twitter](https://x.com/eyyowitsmark/status/2071961241040646601?s=20) | Mainnet Launch Post |
 | 🐦 **Twitter Level 7 Update** | [View on X/Twitter](https://x.com/eyyowitsmark/status/2071964990886883653?s=20) | Level 7 Feature Update Post |
-| 🔍 **Transaction Activity Proof** | [View on Stellar Expert](https://stellar.expert/explorer/public/contract/CDQVUENXMPWVLDOJKAW7U3VHDOCMACBIUC7E5TIDIJXEOB4TOKT4KXOE) | On-chain Transaction Verification |
+| 🔍 **Transaction Activity Proof** | [View on Stellar Expert](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ) | On-chain Transaction Verification |
 | 📈 **Growth & Traction Report** | [View Growth Report](./monthly_growth_report.md) | Closed Beta Pilot Growth Report |
 
 ---
@@ -50,7 +50,7 @@ KlassPay solves a massive problem for university students and organizers: the aw
 KlassPay fulfills the requirements set for **Level 6 (Mainnet)** and **Level 7 (Master Track)** of the Stellar RiseIn Bootcamp:
 
 ### Level 6 Requirements Checklist
-- [x] **Mainnet Smart Contract Deployed:** Contract ID [`CDQVUENXMPWVLDOJKAW7U3VHDOCMACBIUC7E5TIDIJXEOB4TOKT4KXOE`](https://stellar.expert/explorer/public/contract/CDQVUENXMPWVLDOJKAW7U3VHDOCMACBIUC7E5TIDIJXEOB4TOKT4KXOE)
+- [x] **Mainnet Smart Contract Deployed:** Contract ID [`CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
 - [x] **Fee Sponsorship (Black Belt Feature):** Gasless transactions implemented using Stellar `FeeBumpTransaction` with sponsor wallet [`GATNUOK4FKUSLNDKUY2S5ZJ6ERUSFFICQFVIUQPUKFMG5236BHA5PF3S`](https://stellar.expert/explorer/public/account/GATNUOK4FKUSLNDKUY2S5ZJ6ERUSFFICQFVIUQPUKFMG5236BHA5PF3S).
 - [x] **Community Contribution:** Technical blog published on [Dev.to](https://dev.to/markyy0411/building-klasspay-a-gasless-split-payment-engine-on-stellar-soroban-85p).
 - [x] **Pitch Deck & Video:** [Canva Pitch Deck](https://canva.link/au4fo5k0t0do5ew) & [Loom Demo Video](https://www.loom.com/share/2e5c2070d6094b3485ec7c5757279aba).
