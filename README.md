@@ -2,6 +2,12 @@
 
 > **A split-payment app for students built on Stellar & Soroban.**
 
+<br/>
+<div align="center">
+  <img src="./assets/screenshot1.png" alt="KlassPay Homepage & Tutorial" width="800"/>
+</div>
+<br/>
+
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-klass--pay.vercel.app-blue?style=for-the-badge&logo=vercel)](https://klass-pay.vercel.app/)
 [![Stellar Mainnet](https://img.shields.io/badge/Stellar%20Mainnet-Live-success?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
 [![CSAT Score](https://img.shields.io/badge/CSAT-4.8%2F5.0-orange?style=for-the-badge)](https://docs.google.com/spreadsheets/d/1wVUU7dA9LYpTh3xD6160iHV0KXrAzl-5a9QBc02mbXk/edit?usp=sharing)
