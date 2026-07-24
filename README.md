@@ -1,6 +1,6 @@
-# KlassPay 💸
+# KlassPay
 
-> **The premium split-payment engine for students powered by Stellar & Soroban.**
+> **A split-payment app for students built on Stellar & Soroban.**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-klass--pay.vercel.app-blue?style=for-the-badge&logo=vercel)](https://klass-pay.vercel.app/)
 [![Stellar Mainnet](https://img.shields.io/badge/Stellar%20Mainnet-Live-success?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/public/contract/CDQVUENXMPWVLDOJKAW7U3VHDOCMACBIUC7E5TIDIJXEOB4TOKT4KXOE)
@@ -32,22 +32,22 @@
 
 KlassPay solves a massive problem for university students and organizers: the awkward, stressful, and messy process of collecting money for group projects, class funds, or shared events. Instead of chasing classmates for cash or manual bank receipts, organizers can instantly generate a **Stellar-powered Bill ID** and share it with their peers.
 
-### ✨ Key Features Built
-- **Instant Bill Creation:** One-click deployment of a custom Soroban smart contract to manage shared group funds.
-- **Real-Time Blockchain Tracking:** Transparent real-time display showing funding percentages, contributor wallet addresses, and remaining balance.
+### Features
+- **Create Bills:** Deploy a custom Soroban smart contract to manage shared group funds.
+- **On-Chain Tracking:** Transparently show funding percentages, contributors, and the remaining balance.
 - **Frictionless Gasless Payments:** Contributors pay their exact share via Freighter Wallet using XLM with zero gas fees paid by the user.
 - **Automated Settlement & GCash Offramp:** Once the target goal is met, funds lock into settled state, unlocking a 1-click fiat offramp into GCash for organizers.
 - **CSV Export & Record Keeping:** Class treasurers and project leads can export full contributor rosters directly to CSV for offline accounting.
 - **Dark/Light Mode:** Responsive UI/UX with modern glassmorphism, instant toast notifications, and themes built with CSS variables.
 
-### 🛡️ Security & Audit Review
-- **Security Proof:** The smart contract logic has undergone a comprehensive internal security review adhering strictly to official Stellar Soroban security guidelines. All fund deposits and settlements are protected by atomic smart contract executions, eliminating unauthorized withdrawals or distribution vulnerabilities.
+### Security
+- **Smart Contract Safety:** We followed the official Stellar Soroban security guidelines to ensure that funds are safe and withdrawals are properly authorized.
 
 ---
 
-## 🏆 RiseIn Level 6 & Level 7 Compliance Overview
+## RiseIn Level 6 & Level 7 Submission Overview
 
-KlassPay meets and exceeds all requirements set for **Level 6 (Mainnet & Black Belt Phase)** and **Level 7 (Master Track)** of the Stellar RiseIn Bootcamp:
+KlassPay fulfills the requirements set for **Level 6 (Mainnet)** and **Level 7 (Master Track)** of the Stellar RiseIn Bootcamp:
 
 ### Level 6 Requirements Checklist
 - [x] **Mainnet Smart Contract Deployed:** Contract ID [`CDQVUENXMPWVLDOJKAW7U3VHDOCMACBIUC7E5TIDIJXEOB4TOKT4KXOE`](https://stellar.expert/explorer/public/contract/CDQVUENXMPWVLDOJKAW7U3VHDOCMACBIUC7E5TIDIJXEOB4TOKT4KXOE)
@@ -151,4 +151,4 @@ KlassPay evolved through continuous user feedback cycles. Below are the key iter
 
 ---
 
-*Built with ❤️ for the Stellar RiseIn Bootcamp — Level 6 & Level 7 Master Track!*
+*Built for the Stellar RiseIn Bootcamp*
