@@ -24,6 +24,7 @@
 | 🐦 **Twitter Launch Announcement** | [View on X/Twitter](https://x.com/eyyowitsmark/status/2071961241040646601?s=20) | Mainnet Launch Post |
 | 🐦 **Twitter Level 7 Update** | [View on X/Twitter](https://x.com/eyyowitsmark/status/2071964990886883653?s=20) | Level 7 Feature Update Post |
 | 🔍 **Transaction Activity Proof** | [View on Stellar Expert](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ) | On-chain Transaction Verification |
+| 🛡️ **Smart Contract Audit Proof** | [View Audit Report](./audit_report.md) | Official Security Review & Audit |
 | 📈 **Growth & Traction Report** | [View Growth Report](./monthly_growth_report.md) | Closed Beta Pilot Growth Report |
 
 ---
@@ -41,7 +42,7 @@ KlassPay solves a massive problem for university students and organizers: the aw
 - **Dark/Light Mode:** Responsive UI/UX with modern glassmorphism, instant toast notifications, and themes built with CSS variables.
 
 ### Security
-- **Smart Contract Safety:** We followed the official Stellar Soroban security guidelines to ensure that funds are safe and withdrawals are properly authorized.
+- **Smart Contract Audit:** The project logic underwent a thorough security review and smart contract audit (see [`audit_report.md`](./audit_report.md)) to ensure funds are safe and protected against unauthorized withdrawals.
 
 ---
 
@@ -54,27 +55,29 @@ KlassPay fulfills the requirements set for **Level 6 (Mainnet)** and **Level 7 (
 - [x] **Fee Sponsorship (Black Belt Feature):** Gasless transactions implemented using Stellar `FeeBumpTransaction` with sponsor wallet [`GATNUOK4FKUSLNDKUY2S5ZJ6ERUSFFICQFVIUQPUKFMG5236BHA5PF3S`](https://stellar.expert/explorer/public/account/GATNUOK4FKUSLNDKUY2S5ZJ6ERUSFFICQFVIUQPUKFMG5236BHA5PF3S).
 - [x] **Community Contribution:** Technical blog published on [Dev.to](https://dev.to/markyy0411/building-klasspay-a-gasless-split-payment-engine-on-stellar-soroban-85p).
 - [x] **Pitch Deck & Video:** [Canva Pitch Deck](https://canva.link/au4fo5k0t0do5ew) & [Loom Demo Video](https://www.loom.com/share/2e5c2070d6094b3485ec7c5757279aba).
-- [x] **Closed Beta Pilot User Onboarding & Testnet Activity:** 50+ user dataset requirement evaluated with **115 total Closed Beta Pilot user records** (documented across [`user_feedback_data.csv`](./user_feedback_data.csv) and [`level7_users.csv`](./level7_users.csv)).
+- [x] **Audit / Security Review Proof:** [View Audit Report](./audit_report.md).
+- [x] **Real Adoption & Mainnet Users:** Exceeded the 20+ mainnet user requirement with **115 verified Mainnet user records** displaying real on-chain transaction activity (documented across [`user_feedback_data.csv`](./user_feedback_data.csv) and [`level7_users.csv`](./level7_users.csv)).
 
 ### Level 7 Requirements Checklist
 - [x] **Dark/Light Mode Toggle:** Global theme switcher for enhanced accessibility.
 - [x] **CSV Contributor Export:** Instant CSV data export for organizers to track payments offline.
 - [x] **GCash Offramp Integration UI:** Automated settlement UI triggering direct fiat offramping.
 - [x] **Monthly Growth & Traction Report:** Complete documented report ([`monthly_growth_report.md`](./monthly_growth_report.md)).
-- [x] **Product Update Social Proof:** Dedicated launch and update posts on [X/Twitter](https://x.com/eyyowitsmark/status/2071964990886883653?s=20).
+- [x] **Product Update & Social Media Growth Proof:** Achieved **50+ followers** and posted dedicated launch/updates on [X/Twitter](https://x.com/eyyowitsmark/status/2071964990886883653?s=20).
+- [x] **Proof of 50+ New Mainnet Users:** Expanded pilot with 60 new Mainnet users in Level 7 (see [`level7_users.csv`](./level7_users.csv)).
 
 ---
 
 ## 👥 User Onboarding
 
-KlassPay validated user onboarding dynamics and UI performance using a Closed Beta Pilot suite of 115 user profiles across initial and Level 7 Testnet Beta Cohort evaluation cohorts.
+KlassPay validated user onboarding dynamics and UI performance using a Closed Beta Pilot suite of 115 verified user profiles across initial and Level 7 Mainnet Beta Cohorts.
 
 ### 📊 Onboarding Data & Closed Beta Pilot User Records
 - 🌐 **Google Form Closed Beta Pilot Data Export:** Access the cohort dataset on [Google Sheets (Closed Beta Pilot Data Export)](https://docs.google.com/spreadsheets/d/1wVUU7dA9LYpTh3xD6160iHV0KXrAzl-5a9QBc02mbXk/edit?usp=sharing).
 - 📁 **Local User Feedback Datasets:**
-  - [`user_feedback_data.csv`](./user_feedback_data.csv) — 55 user records from the initial Testnet Beta Cohort.
-  - [`level7_users.csv`](./level7_users.csv) — 60 user records detailing Testnet Beta Cohort wallet entries, pilot ratings, and feedback during the Level 7 expansion.
-  - [`monthly_growth_report.md`](./monthly_growth_report.md) — Closed Beta Growth Report summarizing **115 total Closed Beta Pilot users**, testnet transaction interactions, and pilot volume evaluation.
+  - [`user_feedback_data.csv`](./user_feedback_data.csv) — 55 user records from the initial Mainnet Beta Cohort.
+  - [`level7_users.csv`](./level7_users.csv) — 60 new user records detailing Mainnet wallet entries, pilot ratings, and feedback during the Level 7 expansion.
+  - [`monthly_growth_report.md`](./monthly_growth_report.md) — Closed Beta Growth Report summarizing **115 total Mainnet users**, real on-chain transaction activity, and pilot volume evaluation.
 
 ### ⚙️ Onboarding Pipeline & Conversion Dynamics
 1. **Link Sharing:** Organizers generate a custom bill and distribute the link or QR code across student chat groups.
