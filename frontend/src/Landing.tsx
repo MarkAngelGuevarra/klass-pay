@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Wallet, Zap, Shield, ChevronRight, AlertTriangle, CheckCircle, MessageSquare } from 'lucide-react';
+import VideoDemo from './VideoDemo';
+import PaymentHistory from './PaymentHistory';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -156,6 +158,10 @@ export default function Landing() {
             </ul>
           </div>
         </motion.div>
+        {/* Video Demo Section */}
+        <VideoDemo />
+        {/* Payment History Section */}
+        <PaymentHistory />
 
         {/* Contact Us Section */}
         <motion.div 
@@ -197,6 +203,7 @@ export default function Landing() {
         </motion.div>
 
       </main>
+      {/* End of Landing page */}
     </div>
   );
 }
