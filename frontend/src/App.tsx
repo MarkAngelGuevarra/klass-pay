@@ -114,6 +114,7 @@ export default function App() {
       
       const args = [
         { value: address, type: 'address' },
+        { value: newBillId, type: 'u32' },
         { value: target, type: 'u32' },
       ];
       
