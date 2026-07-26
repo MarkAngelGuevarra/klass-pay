@@ -29,9 +29,22 @@ const NETWORK_PASSPHRASE = Networks.TESTNET;
 const BASE_FEE = '100';
 const TIMEOUT_SECONDS = 30;
 
-// SPONSOR WALLET (For Gasless FeeBump Transactions)
-const SPONSOR_SECRET = 'SDMPJ34U4CVIUDFRHOUW6DAV5WAZUAXUBBTEOS55K5RPLD7ZW6SID7K6';
-const sponsorKeypair = Keypair.fromSecret(SPONSOR_SECRET);
+async function getSponsoredTransaction(transactionXdr: string): Promise<string> {
+  const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sponsor-txn`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+    },
+    body: JSON.stringify({ transactionXdr })
+  });
+  
+  const data = await response.json();
+  if (!data.success) {
+    throw new Error(data.error || "Failed to sponsor transaction");
+  }
+  return data.signedXdr;
+}
 
 /** Shared RPC server instance */
 function getRpcServer(): SorobanRpc.Server {
