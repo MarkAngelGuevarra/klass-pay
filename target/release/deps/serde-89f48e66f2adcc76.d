@@ -1,0 +1,14 @@
+C:\Users\Mark\Documents\antigravity\klass-pay\target\release\deps\serde-89f48e66f2adcc76.d: C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs C:\Users\Mark\Documents\antigravity\klass-pay\target\release\build\serde-fb053e1dd89b3b8c\out/private.rs
+
+C:\Users\Mark\Documents\antigravity\klass-pay\target\release\deps\libserde-89f48e66f2adcc76.rlib: C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs C:\Users\Mark\Documents\antigravity\klass-pay\target\release\build\serde-fb053e1dd89b3b8c\out/private.rs
+
+C:\Users\Mark\Documents\antigravity\klass-pay\target\release\deps\libserde-89f48e66f2adcc76.rmeta: C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs C:\Users\Mark\Documents\antigravity\klass-pay\target\release\build\serde-fb053e1dd89b3b8c\out/private.rs
+
+C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs:
+C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs:
+C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs:
+C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs:
+C:\Users\Mark\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs:
+C:\Users\Mark\Documents\antigravity\klass-pay\target\release\build\serde-fb053e1dd89b3b8c\out/private.rs:
+
+# env-dep:OUT_DIR=C:\\Users\\Mark\\Documents\\antigravity\\klass-pay\\target\\release\\build\\serde-fb053e1dd89b3b8c\\out

@@ -23,8 +23,12 @@ export default function App() {
   const [withdrawStep, setWithdrawStep] = useState(0);
 
   useEffect(() => {
-    if (darkMode) document.documentElement.setAttribute('data-theme', 'light');
-    else document.documentElement.removeAttribute('data-theme');
+    if (darkMode) {
+      // Apply dark theme identifier; ensure CSS respects data-theme="dark"
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
   }, [darkMode]);
   
   const [target, setTarget] = useState(100);
@@ -299,12 +303,12 @@ export default function App() {
               
               <div className="field-group">
                 <label className="wallet-bar__label">
-                  To proceed, type <strong>{modalAction === 'create' ? 'confirm' : 'deposit'}</strong> below:
+                  To proceed, type <strong>{modalAction === 'create' ? 'confirm' : 'pay'}</strong> below:
                 </label>
                 <input 
                   className="input"
                   type="text"
-                  placeholder={modalAction === 'create' ? 'confirm' : 'deposit'}
+                  placeholder={modalAction === 'create' ? 'confirm' : 'pay'}
                   value={modalInput}
                   onChange={(e) => setModalInput(e.target.value)}
                 />
@@ -337,6 +341,7 @@ export default function App() {
       <div className="header" style={{ position: 'relative' }}>
         <button 
           onClick={() => setDarkMode(!darkMode)} 
+          aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'} 
           style={{ position: 'absolute', top: 0, right: 0, background: 'transparent', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}
         >
           {darkMode ? '🌙' : '☀️'}
