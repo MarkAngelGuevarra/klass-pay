@@ -77,7 +77,8 @@ export default function App() {
   const handleGetBill = async (id: number) => {
     if (!address) return;
     try {
-      const b = await simulate('get', address, []);
+      const args = [{ value: id, type: 'u32' }];
+      const b = await simulate('get', address, args);
       setBill(b);
       
       // Fetch Firebase Metadata
