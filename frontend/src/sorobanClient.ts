@@ -29,21 +29,21 @@ const NETWORK_PASSPHRASE = Networks.TESTNET;
 const BASE_FEE = '100';
 const TIMEOUT_SECONDS = 30;
 
-async function getSponsoredTransaction(transactionXdr: string): Promise<string> {
-  const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sponsor-txn`, {
+async function getSponsoredTransaction(signedTxXdr: string): Promise<string> {
+  const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sponsor-tx`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
     },
-    body: JSON.stringify({ transactionXdr })
+    body: JSON.stringify({ signedTxXdr }) // Must match the backend variable name
   });
   
   const data = await response.json();
   if (!data.success) {
     throw new Error(data.error || "Failed to sponsor transaction");
   }
-  return data.signedXdr;
+  return data.xdr; // Must match the backend response variable
 }
 
 /** Shared RPC server instance */
@@ -263,18 +263,15 @@ export async function invokeWrite(
 
   /* Level 6 Black Belt Feature: GASLESS FEE SPONSORSHIP */
   /* Wrap the user's signed transaction in a FeeBumpTransaction */
-  const feeBumpTx = TransactionBuilder.buildFeeBumpTransaction(
-    sponsorKeypair,
-    BASE_FEE,
-    signedTx,
-    NETWORK_PASSPHRASE
-  );
-  
-  /* Sponsor pays the network fee */
-  feeBumpTx.sign(sponsorKeypair);
+  /* Level 6 Black Belt Feature: GASLESS FEE SPONSORSHIP */
+  /* Send the user-signed XDR to Supabase to be wrapped in a FeeBump and signed by the sponsor */
+  const finalSponsoredXdr = await getSponsoredTransaction(signedXdr);
 
-  /* Submit the Gasless Transaction */
-  const sendResult = await server.sendTransaction(feeBumpTx);
+  /* Convert the sponsored XDR back into a transaction object */
+  const finalTx = TransactionBuilder.fromXDR(finalSponsoredXdr, NETWORK_PASSPHRASE) as any;
+
+  /* Submit the fully sponsored Transaction to the network */
+  const sendResult = await server.sendTransaction(finalTx);
 
   if (sendResult.status === 'ERROR') {
     throw new Error(`Transaction submission failed: ${sendResult.errorResult?.toXDR('base64') ?? 'unknown error'}`);
