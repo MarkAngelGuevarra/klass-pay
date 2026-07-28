@@ -4,7 +4,7 @@ async function check() {
   const server = new rpc.Server('https://soroban-rpc.mainnet.stellar.org');
   try {
     const res = await server.getLedgerEntries(
-      rpc.getLedgerKeyForContract('CDQVUENXMPWVLDOJKAW7U3VHDOCMACBIUC7E5TIDIJXEOB4TOKT4KXOE')
+      rpc.getLedgerKeyForContract('CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ')
     );
     console.log(res);
   } catch(e) {

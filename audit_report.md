@@ -18,13 +18,13 @@ This report provides a forensic, file-by-file audit of the **KlassPay** codebase
 
 ### 1. Mainnet Smart Contract Deployment
 - **Status:** **100% Complete**
-- **Contract Address (ID):** [`CCR4JWM44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`](https://stellar.expert/explorer/public/contract/CCR4JWM44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
+- **Contract Address (ID):** [`CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
 - **Blockchain Network:** Stellar Mainnet (Soroban Smart Contract)
 - **Verification Proof & Code Locations:**
   - `README.md` (lines 6, 17, 26, 53): Mainnet contract ID and verified explorer links.
   - `frontend/check-mainnet.cjs` (lines 3-10): Automated verification script checking mainnet RPC state.
   - `contracts/klass-pay/src/lib.rs` (lines 28-99): Core smart contract compiled to WebAssembly and deployed to Stellar Mainnet.
-  - **Explorer Verification Link:** [Stellar Expert Explorer](https://stellar.expert/explorer/public/contract/CCR4JWM44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
+  - **Explorer Verification Link:** [Stellar Expert Explorer](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
 
 ### 2. Gasless Fee Sponsorship (Black Belt Requirement)
 - **Status:** **100% Complete**
@@ -129,7 +129,7 @@ This report provides a forensic, file-by-file audit of the **KlassPay** codebase
 
 | Requirement | Category | Target File / Asset | Line Range | Status | Evidence Verification |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Mainnet Contract** | Level 6 | `README.md`<br>`contracts/klass-pay/src/lib.rs`<br>`frontend/check-mainnet.cjs` | L6, 17, 26, 53<br>L28-99<br>L3-10 | **PASSED** | Contract `CCR4JWM44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ` verified on Stellar Expert explorer. |
+| **Mainnet Contract** | Level 6 | `README.md`<br>`contracts/klass-pay/src/lib.rs`<br>`frontend/check-mainnet.cjs` | L6, 17, 26, 53<br>L28-99<br>L3-10 | **PASSED** | Contract `CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ` verified on Stellar Expert explorer. |
 | **Gasless Sponsorship** | Level 6 | `frontend/src/sorobanClient.ts`<br>`README.md` | L32-34, L251-262<br>L19, 54, 92-95 | **PASSED** | Sponsor account `GATNUOK4FKUSLNDKUY2S5ZJ6ERUSFFICQFVIUQPUKFMG5236BHA5PF3S` used in `FeeBumpTransaction`. |
 | **Dev.to Article** | Level 6 | `README.md` | L23, 55 | **PASSED** | Verified Dev.to technical blog URL live and active. |
 | **Pitch & Video** | Level 6 | `README.md` | L20-21, 56 | **PASSED** | Valid Canva pitch deck link & Loom demo walkthrough video link verified. |
