@@ -24,8 +24,9 @@ import { getContractId } from './contractRuntime';
 
 export const DEPLOY_HINT = 'contracts/split_pay';
 
-const RPC_URL = 'https://soroban-testnet.stellar.org';
-const NETWORK_PASSPHRASE = Networks.TESTNET;
+const RPC_URL = 'https://soroban-rpc.mainnet.stellar.org';
+const HORIZON_URL = 'https://horizon.stellar.org';
+const NETWORK_PASSPHRASE = Networks.PUBLIC;
 const BASE_FEE = '100';
 const TIMEOUT_SECONDS = 30;
 
@@ -187,7 +188,7 @@ export async function simulate(
 
   const scArgs = buildArgs(method, args);
   
-  const horizonServer = new Horizon.Server('https://horizon-testnet.stellar.org');
+  const horizonServer = new Horizon.Server(HORIZON_URL);
   const account = await horizonServer.loadAccount(source).catch(() => {
     /* If account doesn't exist on-chain yet, build a zero-sequence stub */
     return new Account(source, '0');
@@ -236,7 +237,7 @@ export async function invokeWrite(
   const scArgs = buildArgs(method, args);
   
   // Use Horizon to fetch account (Soroban RPC testnet sometimes throws Account not found)
-  const horizonServer = new Horizon.Server('https://horizon-testnet.stellar.org');
+  const horizonServer = new Horizon.Server(HORIZON_URL);
   const account = await horizonServer.loadAccount(source);
 
   const tx = new TransactionBuilder(account, {

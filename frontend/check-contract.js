@@ -18,8 +18,17 @@ import {
 
 const NETWORK_PASSPHRASE = Networks.TESTNET;
 const BASE_FEE = '100';
-const CONTRACT_ID = 'CBRIH3HBATDNMNKFGTLJ3G3WBGP4DDQTHPX7NOIFZRXRNI75V3EPWWLG';
-const SPONSOR_SECRET = 'SDMPJ34U4CVIUDFRHOUW6DAV5WAZUAXUBBTEOS55K5RPLD7ZW6SID7K6';
+const CONTRACT_ID = process.env.CONTRACT_ID;
+const SPONSOR_SECRET = process.env.SPONSOR_SECRET;
+
+if (!CONTRACT_ID || !SPONSOR_SECRET) {
+  console.error(
+    'Set CONTRACT_ID and SPONSOR_SECRET as environment variables before running this script.\n' +
+    'Never hardcode secret keys in source files — this repo is public.\n' +
+    'Example: CONTRACT_ID=... SPONSOR_SECRET=... node check-contract.js'
+  );
+  process.exit(1);
+}
 
 const results = [];
 
