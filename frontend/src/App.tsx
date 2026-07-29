@@ -115,8 +115,9 @@ export default function App() {
       
       const args = [
         { value: address, type: 'address' },
+        { value: 'CAS3J7GYIGIRFWDIKIIGOKYSRTAMROWCCBW3FQAAZDIZ5MA2FA2NHAW6', type: 'address' },
         { value: newBillId, type: 'u32' },
-        { value: target, type: 'u32' },
+        { value: target, type: 'i128' },
       ];
       
       // FIXED: Use signXDR from useWallet()
@@ -150,7 +151,8 @@ export default function App() {
     try {
       const args = [
         { value: address, type: 'address' },
-        { value: payAmount, type: 'u32' },
+        { value: currentBillId, type: 'u32' },
+        { value: payAmount, type: 'i128' },
       ];
       
       // FIXED: Use signXDR from useWallet()
