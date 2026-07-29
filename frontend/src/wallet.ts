@@ -59,9 +59,9 @@ export function useWallet(): WalletState {
     
     try {
       const net = await freighterApi.getNetworkDetails();
-      if (net.network === 'TESTNET') {
-        activeNetwork = 'TESTNET';
-        passphrase = 'Test SDF Network ; September 2015';
+      // Enforce Mainnet strictly
+      if (net.network === 'PUBLIC') {
+        activeNetwork = 'PUBLIC';
       }
     } catch(e) {}
 
