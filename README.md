@@ -21,8 +21,7 @@
 | :--- | :--- | :--- |
 | 🌐 **Live Demo Application** | [klass-pay.vercel.app](https://klass-pay.vercel.app/) | Production dApp on Vercel |
 | 📜 **Stellar Mainnet Contract** | [`CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ) | Verified Soroban Mainnet Contract |
-| 🧪 **Stellar Testnet Contract** | `CCFICKTKIXYLMDJXBDHSWRUR632ZIB22WAPDAKVQKG3YI6M7RMNCE2FE` | Testnet Deployment Contract |
-| 🔑 **Fee Sponsor Wallet** | [`GATNUOK4FKUSLNDKUY2S5ZJ6ERUSFFICQFVIUQPUKFMG5236BHA5PF3S`](https://stellar.expert/explorer/public/account/GATNUOK4FKUSLNDKUY2S5ZJ6ERUSFFICQFVIUQPUKFMG5236BHA5PF3S) | Mainnet Gasless Fee Sponsor Account |
+| 🔑 **Fee Sponsor Wallet** | [`GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD`](https://stellar.expert/explorer/public/account/GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD) | Mainnet Gasless Fee Sponsor Account |
 | 🎨 **Pitch Deck** | [View on Canva](https://canva.link/au4fo5k0t0do5ew) | Official Product Presentation |
 | 📹 **Demo Video** | [Watch on Loom](https://www.loom.com/share/2e5c2070d6094b3485ec7c5757279aba) | Walkthrough & Live Contract Execution |
 | 📊 **User Feedback Dataset** | [Google Sheets (Closed Beta Pilot Data Export)](https://docs.google.com/spreadsheets/d/1wVUU7dA9LYpTh3xD6160iHV0KXrAzl-5a9QBc02mbXk/edit?usp=sharing) | 115+ Closed Beta Pilot User Data Export |
@@ -58,7 +57,7 @@ KlassPay fulfills the requirements set for **Level 6 (Mainnet)** and **Level 7 (
 
 ### Level 6 Requirements Checklist
 - [x] **Mainnet Smart Contract Deployed:** Contract ID [`CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
-- [x] **Fee Sponsorship (Black Belt Feature):** Gasless transactions implemented using Stellar `FeeBumpTransaction` with sponsor wallet [`GATNUOK4FKUSLNDKUY2S5ZJ6ERUSFFICQFVIUQPUKFMG5236BHA5PF3S`](https://stellar.expert/explorer/public/account/GATNUOK4FKUSLNDKUY2S5ZJ6ERUSFFICQFVIUQPUKFMG5236BHA5PF3S).
+- [x] **Fee Sponsorship (Black Belt Feature):** Gasless transactions implemented using Stellar `FeeBumpTransaction` with sponsor wallet [`GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD`](https://stellar.expert/explorer/public/account/GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD).
 - [x] **Community Contribution:** Technical blog published on [Dev.to](https://dev.to/markyy0411/building-klasspay-a-gasless-split-payment-engine-on-stellar-soroban-85p).
 - [x] **Pitch Deck & Video:** [Canva Pitch Deck](https://canva.link/au4fo5k0t0do5ew) & [Loom Demo Video](https://www.loom.com/share/2e5c2070d6094b3485ec7c5757279aba).
 - [x] **Audit / Security Review Proof:** [View Audit Report](./audit_report.md).
