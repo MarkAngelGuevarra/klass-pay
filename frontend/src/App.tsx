@@ -148,10 +148,11 @@ export default function App() {
     setLoading(true);
     setError(null);
     try {
-      const args = [
-        { value: address, type: 'address' },
-        { value: payAmount, type: 'u32' },
-      ];
+        const args = [
+          { value: address, type: 'address' },
+          { value: currentBillId, type: 'u32' },
+          { value: payAmount, type: 'u32' },
+        ];
       
       // FIXED: Use signXDR from useWallet()
       await invokeWrite('pay', address, signXDR, args);
