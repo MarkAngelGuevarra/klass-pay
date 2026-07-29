@@ -23,7 +23,7 @@
 | 📜 **Stellar Mainnet Contract** | [`CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ) | Verified Soroban Mainnet Contract |
 | 🔑 **Fee Sponsor Wallet** | [`GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD`](https://stellar.expert/explorer/public/account/GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD) | Mainnet Gasless Fee Sponsor Account |
 | 🎨 **Pitch Deck** | [View on Canva](https://canva.link/au4fo5k0t0do5ew) | Official Product Presentation |
-| 📹 **Demo Video** | [Watch on Loom](https://www.loom.com/share/2e5c2070d6094b3485ec7c5757279aba) | Walkthrough & Live Contract Execution |
+| 📹 **Demo Video** | [Watch on Loom](https://www.loom.com/share/a19c53a76a784381924897b8f5d7b3c9) | Walkthrough & Live Contract Execution |
 | 📊 **User Feedback Dataset** | [Google Sheets (Closed Beta Pilot Data Export)](https://docs.google.com/spreadsheets/d/1wVUU7dA9LYpTh3xD6160iHV0KXrAzl-5a9QBc02mbXk/edit?usp=sharing) | 115+ Closed Beta Pilot User Data Export |
 | ✍️ **Dev.to Technical Article** | [Read on Dev.to](https://dev.to/markyy0411/building-klasspay-a-gasless-split-payment-engine-on-stellar-soroban-85p) | Soroban & Fee Sponsorship Deep-Dive |
 | 🐦 **Twitter Launch Announcement** | [View on X/Twitter](https://x.com/eyyowitsmark/status/2071961241040646601?s=20) | Mainnet Launch Post |
@@ -59,7 +59,7 @@ KlassPay fulfills the requirements set for **Level 6 (Mainnet)** and **Level 7 (
 - [x] **Mainnet Smart Contract Deployed:** Contract ID [`CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
 - [x] **Fee Sponsorship (Black Belt Feature):** Gasless transactions implemented using Stellar `FeeBumpTransaction` with sponsor wallet [`GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD`](https://stellar.expert/explorer/public/account/GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD).
 - [x] **Community Contribution:** Technical blog published on [Dev.to](https://dev.to/markyy0411/building-klasspay-a-gasless-split-payment-engine-on-stellar-soroban-85p).
-- [x] **Pitch Deck & Video:** [Canva Pitch Deck](https://canva.link/au4fo5k0t0do5ew) & [Loom Demo Video](https://www.loom.com/share/2e5c2070d6094b3485ec7c5757279aba).
+- [x] **Pitch Deck & Video:** [Canva Pitch Deck](https://canva.link/au4fo5k0t0do5ew) & [Loom Demo Video](https://www.loom.com/share/a19c53a76a784381924897b8f5d7b3c9).
 - [x] **Audit / Security Review Proof:** [View Audit Report](./audit_report.md).
 - [x] **Real Adoption & Mainnet Users:** Exceeded the 20+ mainnet user requirement with **115 verified Mainnet user records** displaying real on-chain transaction activity (documented across [`user_feedback_data.csv`](./user_feedback_data.csv) and [`level7_users.csv`](./level7_users.csv)).
 
@@ -100,27 +100,32 @@ KlassPay evolved through continuous user feedback cycles. Below are the key iter
 1. **Gasless Fee Sponsorship (Eliminating Onboarding Friction)**
    - *Problem:* Students found acquiring extra XLM just for transaction fees confusing and prohibitive.
    - *Solution:* Implemented `FeeBumpTransaction` in the frontend and contract integration layer, allowing our sponsor wallet to cover network fees.
-   - *Git Commit Link:* [View Commit `f04ab11`](https://github.com/Markyy0411/klass-pay/commit/f04ab11aa87d7f8aa6f1f88ab5a0c830d30904e1)
+   - *Git Commit Link:* [View Commit `f04ab11`](https://github.com/MarkAngelGuevarra/klass-pay/commit/f04ab11aa87d7f8aa6f1f88ab5a0c830d30904e1)
 
 2. **GCash Offramp & Integration UI**
    - *Problem:* Organizers needed a simple way to transfer collected XLM into local Philippine fiat (GCash) upon bill completion.
    - *Solution:* Built an automated settlement trigger and GCash offramp Closed Beta Pilot interface for one-click withdrawals.
-   - *Git Commit Link:* [View Commit `00d10c2`](https://github.com/Markyy0411/klass-pay/commit/00d10c2ae8ea9d6f66d68af306be715df5b4e93b)
+   - *Git Commit Link:* [View Commit `00d10c2`](https://github.com/MarkAngelGuevarra/klass-pay/commit/00d10c2ae8ea9d6f66d68af306be715df5b4e93b)
 
 3. **Toast Notifications & Real-Time Visual Feedback**
    - *Problem:* Users were uncertain if their transactions were confirmed on the Stellar network.
    - *Solution:* Added real-time toast notifications, dynamic progress bar updates, and status indicators.
-   - *Git Commit Link:* [View Commit `5aa29aa`](https://github.com/Markyy0411/klass-pay/commit/5aa29aaa42eab998a55e9308a88cf9af98dfb4b7)
+   - *Git Commit Link:* [View Commit `5aa29aa`](https://github.com/MarkAngelGuevarra/klass-pay/commit/5aa29aaa42eab998a55e9308a88cf9af98dfb4b7)
 
 4. **Level 7 Enhancements (Dark Mode, CSV Export, Growth Report)**
    - *Problem:* Organizers requested offline CSV export capabilities, and users requested a dark theme.
    - *Solution:* Integrated global dark mode, CSV exporter for contributor lists, and published the monthly growth report.
-   - *Git Commit Link:* [View Commit `282a5dc`](https://github.com/Markyy0411/klass-pay/commit/282a5dc92763f47b4a12dd71e5bba41d65ca1845)
+   - *Git Commit Link:* [View Commit `282a5dc`](https://github.com/MarkAngelGuevarra/klass-pay/commit/282a5dc92763f47b4a12dd71e5bba41d65ca1845)
 
 5. **User Feedback Iteration Summary & Documentation Hardening**
    - *Problem:* Need for comprehensive feedback tracking and dataset documentation integration.
    - *Solution:* Formatted and integrated user feedback metrics, dataset links, and iteration history.
-   - *Git Commit Link:* [View Commit `0103ade`](https://github.com/Markyy0411/klass-pay/commit/0103adef2c6551592b61667f48c5f920e44e37b3)
+   - *Git Commit Link:* [View Commit `0103ade`](https://github.com/MarkAngelGuevarra/klass-pay/commit/0103adef2c6551592b61667f48c5f920e44e37b3)
+
+### 🔮 Next Phase Improvements (Based on Feedback)
+Based on our latest user feedback surveys, we are actively planning the next evolution of KlassPay to further improve user retention and product-market fit:
+- **Partial/Installment Payments:** Users requested the ability to pay their share in smaller increments. We will update the smart contract logic to accept partial contributions per user. *(Targeted for next major release)*
+- **Automated Email Receipts:** Organizers want automated confirmations sent to students. We plan to integrate Resend/SendGrid tied to Supabase edge functions. *(Targeted for next major release)*
 
 ---
 
@@ -128,7 +133,7 @@ KlassPay evolved through continuous user feedback cycles. Below are the key iter
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/Markyy0411/klass-pay.git
+   git clone https://github.com/MarkAngelGuevarra/klass-pay.git
    cd klass-pay/frontend
    ```
 
