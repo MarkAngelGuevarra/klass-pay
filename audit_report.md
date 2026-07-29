@@ -31,8 +31,8 @@ This report provides a forensic, file-by-file audit of the **KlassPay** codebase
 - **Sponsor Account ID:** [`GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD`](https://stellar.expert/explorer/public/account/GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD)
 - **Technical Mechanism:** Stellar `FeeBumpTransaction` wrapping user-signed Soroban contract calls.
 - **Verification Proof & Code Locations:**
-  - `frontend/src/sorobanClient.ts` (lines 32-34): Sponsor wallet secret key and keypair instantiation (`sponsorKeypair`).
-  - `frontend/src/sorobanClient.ts` (lines 251-262): `TransactionBuilder.buildFeeBumpTransaction(sponsorKeypair, BASE_FEE, signedTx, NETWORK_PASSPHRASE)` wrapping signed user transactions and submitting sponsored fees to Stellar network RPC.
+  - `frontend/src/sorobanClient.ts` (`getSponsoredTransaction`): user signs the inner transaction client-side, then sends the signed XDR to a Supabase Edge Function — the sponsor's secret key never touches the browser.
+  - `supabase/functions/sponsor-tx/index.ts`: server-side function reads `SPONSOR_SECRET_KEY` from Supabase secrets, validates the transaction targets the KlassPay contract, wraps it in a `FeeBumpTransaction`, signs it, and returns the signed XDR for submission.
   - `README.md` (lines 19, 54, 92-95): Documentation and commit reference `f04ab11`.
   - **Explorer Verification Link:** [Stellar Expert Sponsor Account](https://stellar.expert/explorer/public/account/GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD)
 

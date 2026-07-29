@@ -361,10 +361,11 @@ export default function App() {
             </span>
             <button 
               className="btn" 
-              style={{ width: 'auto', padding: '0.4rem 0.8rem', background: '#005CEE', fontSize: '0.8rem' }} 
-              onClick={() => setGcashModalOpen(true)}
+              style={{ width: 'auto', padding: '0.4rem 0.8rem', background: '#3a3a3a', fontSize: '0.8rem', cursor: 'not-allowed', opacity: 0.6 }} 
+              disabled
+              title="GCash deposits (SEP-24 anchor integration) are not yet implemented"
             >
-              + Deposit PHP
+              + Deposit PHP (Coming Soon)
             </button>
           </div>
         ) : (
@@ -374,9 +375,9 @@ export default function App() {
         )}
       </div>
 
-      {isConnected && network === 'PUBLIC' && (
+      {isConnected && network !== 'PUBLIC' && (
         <div className="msg msg--error" style={{ marginBottom: '1.5rem', textAlign: 'center', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid #EF4444' }}>
-          <strong>⚠️ Warning:</strong> Your wallet is connected to MAINNET. Please switch Freighter to <strong>TESTNET</strong> to use KlassPay.
+          <strong>⚠️ Warning:</strong> Your wallet is connected to {network || 'an unknown network'}. Please switch Freighter to <strong>MAINNET</strong> to use KlassPay.
         </div>
       )}
 
@@ -410,8 +411,8 @@ export default function App() {
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                 <div style={{ fontSize: '2.5rem', lineHeight: '1' }}>3️⃣</div>
                 <div>
-                  <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1.1rem' }}>Track & Withdraw to GCash</h4>
-                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.5' }}>Watch the live progress bar fill up on the blockchain. Once fully funded, instantly offramp the balance directly to your GCash account in PHP.</p>
+                  <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1.1rem' }}>Track Live On-Chain</h4>
+                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.5' }}>Watch the live progress bar fill up as classmates pay on-chain. GCash offramp is coming in a future update.</p>
                 </div>
               </div>
             </div>
@@ -504,8 +505,13 @@ export default function App() {
                     <div className="msg msg--ok" style={{ background: 'linear-gradient(90deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05))', border: '1px solid var(--success)'}}>
                       🎉 <strong>Goal reached!</strong> This bill has been fully paid off.
                     </div>
-                      <button className="btn" style={{ background: '#005CEE' }} onClick={handleWithdraw}>
-                        📱 Withdraw {bill.target} XLM to GCash
+                      <button
+                        className="btn"
+                        style={{ background: '#3a3a3a', cursor: 'not-allowed', opacity: 0.6 }}
+                        disabled
+                        title="Withdrawal requires the upgraded contract to be deployed first. Coming soon."
+                      >
+                        📱 Withdraw to GCash (Coming Soon)
                       </button>
                   </div>
                 )}
