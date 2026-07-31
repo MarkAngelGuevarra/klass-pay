@@ -419,28 +419,48 @@ export default function App() {
             </button>
           </div>
           
-          <div className="card" style={{ background: 'var(--surface)' }}>
-            <h3 style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '1.5rem' }}>📖 How It Works</h3>
+          <div className="card" style={{ background: 'var(--surface)', border: '2px dashed #8B5CF6', padding: '2rem' }}>
+            <div style={{ background: 'rgba(139, 92, 246, 0.15)', color: '#A78BFA', padding: '0.4rem 1rem', borderRadius: '20px', display: 'inline-block', fontSize: '0.85rem', fontWeight: 'bold', marginBottom: '1rem' }}>
+              🎮 PLAYER GUIDE & TUTORIAL
+            </div>
+            <h3 style={{ fontSize: '1.6rem', marginBottom: '1rem', background: 'linear-gradient(90deg, #38BDF8, #8B5CF6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: '800' }}>
+              Mastering KlassPay in 3 Quick Missions
+            </h3>
+
+            <div style={{ background: 'rgba(239, 68, 68, 0.1)', borderLeft: '4px solid #EF4444', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem' }}>
+              <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--text)', lineHeight: '1.5' }}>
+                <strong>⚠️ MISSION REQUIREMENT:</strong> To interact with live smart contracts on Mainnet, <strong>even 1 XLM is okay</strong> in your Freighter Wallet just to test and contribute for the sake of the project! <br/><span style={{ color: '#10B981', fontWeight: 'bold' }}>🛡️ GAS IS 100% FREE:</span> Our Gasless Relayer automatically sponsors and pays all Stellar network fees for you!
+              </p>
+            </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                <div style={{ fontSize: '2.5rem', lineHeight: '1' }}>1️⃣</div>
+              <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'flex-start', background: 'var(--background)', padding: '1.2rem', borderRadius: '12px', border: '1px solid var(--border)' }}>
+                <div style={{ background: '#005CEE', color: 'white', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.2rem', flexShrink: 0 }}>
+                  1
+                </div>
                 <div>
-                  <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1.1rem' }}>Create a Bill</h4>
-                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.5' }}>Connect your Freighter wallet and create a split-payment bill for your class (e.g., "Graduation Party"). Set your target amount in XLM.</p>
+                  <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '1.1rem', color: 'var(--text)' }}>🎯 Mission 1: Initialize the Split Contract</h4>
+                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.5' }}>Click "Connect Wallet" above. Enter your project title (e.g., "Graduation Party") and set the target goal in XLM. Signing the transaction creates a secure Soroban contract on Mainnet!</p>
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                <div style={{ fontSize: '2.5rem', lineHeight: '1' }}>2️⃣</div>
+
+              <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'flex-start', background: 'var(--background)', padding: '1.2rem', borderRadius: '12px', border: '1px solid var(--border)' }}>
+                <div style={{ background: '#8B5CF6', color: 'white', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.2rem', flexShrink: 0 }}>
+                  2
+                </div>
                 <div>
-                  <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1.1rem' }}>Share with Classmates</h4>
-                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.5' }}>Copy the unique bill link and send it to your class group chat. Students can join instantly and pay their share without worrying about network gas fees!</p>
+                  <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '1.1rem', color: 'var(--text)' }}>📢 Mission 2: Rally the Squad</h4>
+                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.5' }}>Copy your unique Bill URL and blast it to your student group chat or Discord. Your classmates simply connect Freighter and contribute their share directly to the contract!</p>
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                <div style={{ fontSize: '2.5rem', lineHeight: '1' }}>3️⃣</div>
+
+              <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'flex-start', background: 'var(--background)', padding: '1.2rem', borderRadius: '12px', border: '1px solid var(--border)' }}>
+                <div style={{ background: '#10B981', color: 'white', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.2rem', flexShrink: 0 }}>
+                  3
+                </div>
                 <div>
-                  <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1.1rem' }}>Track Live On-Chain</h4>
-                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.5' }}>Watch the live progress bar fill up as classmates pay on-chain. GCash offramp is coming in a future update.</p>
+                  <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '1.1rem', color: 'var(--text)' }}>🏆 Mission 3: Victory & Settlement</h4>
+                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.5' }}>Watch the XP Bar (Funding Progress) fill up live on-chain in real time! Once fully funded, organizers can instantly export the complete roster to CSV for grading or offline accounting!</p>
                 </div>
               </div>
             </div>

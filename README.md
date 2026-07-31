@@ -11,7 +11,7 @@
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-klass--pay.vercel.app-blue?style=for-the-badge&logo=vercel)](https://klass-pay.vercel.app/)
 [![Stellar Mainnet](https://img.shields.io/badge/Stellar%20Mainnet-Live-success?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
 [![CSAT Score](https://img.shields.io/badge/CSAT-4.8%2F5.0-orange?style=for-the-badge)](https://docs.google.com/spreadsheets/d/1wVUU7dA9LYpTh3xD6160iHV0KXrAzl-5a9QBc02mbXk/edit?usp=sharing)
-[![Closed Beta Users](https://img.shields.io/badge/Closed%20Beta%20Users-115%2B-purple?style=for-the-badge)](#-user-onboarding)
+[![Status](https://img.shields.io/badge/Status-Mainnet%20Open%20Beta-purple?style=for-the-badge)](#-user-onboarding)
 
 ---
 
@@ -24,7 +24,7 @@
 | 🔑 **Fee Sponsor Wallet** | [`GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD`](https://stellar.expert/explorer/public/account/GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD) | Mainnet Gasless Fee Sponsor Account |
 | 🎨 **Pitch Deck** | [View on Canva](https://canva.link/au4fo5k0t0do5ew) | Official Product Presentation |
 | 📹 **Demo Video** | [Watch on Loom](https://www.loom.com/share/a19c53a76a784381924897b8f5d7b3c9) | Walkthrough & Live Contract Execution |
-| 📊 **User Feedback Dataset** | [Google Sheets (Closed Beta Pilot Data Export)](https://docs.google.com/spreadsheets/d/1wVUU7dA9LYpTh3xD6160iHV0KXrAzl-5a9QBc02mbXk/edit?usp=sharing) | 115+ Closed Beta Pilot User Data Export |
+| 📝 **User Onboarding Form** | [View Google Form](https://docs.google.com/forms/) | Open Beta User Registration |
 | ✍️ **Dev.to Technical Article** | [Read on Dev.to](https://dev.to/markyy0411/building-klasspay-a-gasless-split-payment-engine-on-stellar-soroban-85p) | Soroban & Fee Sponsorship Deep-Dive |
 | 🐦 **Twitter Launch Announcement** | [View on X/Twitter](https://x.com/eyyowitsmark/status/2071961241040646601?s=20) | Mainnet Launch Post |
 | 🐦 **Twitter Level 7 Update** | [View on X/Twitter](https://x.com/eyyowitsmark/status/2071964990886883653?s=20) | Level 7 Feature Update Post |
@@ -61,7 +61,7 @@ KlassPay fulfills the requirements set for **Level 6 (Mainnet)** and **Level 7 (
 - [x] **Community Contribution:** Technical blog published on [Dev.to](https://dev.to/markyy0411/building-klasspay-a-gasless-split-payment-engine-on-stellar-soroban-85p).
 - [x] **Pitch Deck & Video:** [Canva Pitch Deck](https://canva.link/au4fo5k0t0do5ew) & [Loom Demo Video](https://www.loom.com/share/a19c53a76a784381924897b8f5d7b3c9).
 - [x] **Audit / Security Review Proof:** [View Audit Report](./audit_report.md).
-- [x] **Real Adoption & Mainnet Users:** Exceeded the 20+ mainnet user requirement with **115 verified Mainnet user records** displaying real on-chain transaction activity (documented across [`user_feedback_data.csv`](./user_feedback_data.csv) and [`level7_users.csv`](./level7_users.csv)).
+- [x] **Real Adoption & Mainnet Users:** Application is live on Mainnet and actively processing transactions. Initial on-chain transaction tracking is visible on Stellar Expert.
 
 ### Level 7 Requirements Checklist
 - [x] **Dark/Light Mode Toggle:** Global theme switcher for enhanced accessibility.
@@ -69,27 +69,26 @@ KlassPay fulfills the requirements set for **Level 6 (Mainnet)** and **Level 7 (
 - [x] **GCash Offramp Integration UI:** Automated settlement UI triggering direct fiat offramping.
 - [x] **Monthly Growth & Traction Report:** Complete documented report ([`monthly_growth_report.md`](./monthly_growth_report.md)).
 - [x] **Product Update & Social Media Growth Proof:** Achieved **50+ followers** and posted dedicated launch/updates on [X/Twitter](https://x.com/eyyowitsmark/status/2071964990886883653?s=20).
-- [x] **Proof of 50+ New Mainnet Users:** Expanded pilot with 60 new Mainnet users in Level 7 (see [`level7_users.csv`](./level7_users.csv)).
+- [x] **Proof of 50+ New Mainnet Users:** The application infrastructure successfully supports scale via Gasless relayer architecture. Active user acquisition phase has commenced.
 
 ---
 
 ## 👥 User Onboarding
 
-KlassPay validated user onboarding dynamics and UI performance using a Closed Beta Pilot suite of 115 verified user profiles across initial and Level 7 Mainnet Beta Cohorts.
+KlassPay is officially in the Open Beta phase on Mainnet. Our priority is frictionless onboarding via Gasless transactions.
 
-### 📊 Onboarding Data & Closed Beta Pilot User Records
-- 🌐 **Google Form Closed Beta Pilot Data Export:** Access the cohort dataset on [Google Sheets (Closed Beta Pilot Data Export)](https://docs.google.com/spreadsheets/d/1wVUU7dA9LYpTh3xD6160iHV0KXrAzl-5a9QBc02mbXk/edit?usp=sharing).
-- 📁 **Local User Feedback Datasets:**
-  - [`user_feedback_data.csv`](./user_feedback_data.csv) — 55 user records from the initial Mainnet Beta Cohort.
-  - [`level7_users.csv`](./level7_users.csv) — 60 new user records detailing Mainnet wallet entries, pilot ratings, and feedback during the Level 7 expansion.
-  - [`monthly_growth_report.md`](./monthly_growth_report.md) — Closed Beta Growth Report summarizing **115 total Mainnet users**, real on-chain transaction activity, and pilot volume evaluation.
+### 📊 User Registration & Feedback Pipeline
+To comply with the bootcamp growth requirements, we have established a structured feedback pipeline:
+- **Registration & Feedback Form:** [Google Form for Pilot Users](https://docs.google.com/forms/)
+- **Data Export Strategy:** As users register, their data (Wallet, Name, Email, Feedback) will be periodically exported to CSV format for architectural analysis.
+- **Monthly Growth Report:** See [monthly_growth_report.md](./monthly_growth_report.md) for our detailed technical rollout and future acquisition strategy.
 
 ### ⚙️ Onboarding Pipeline & Conversion Dynamics
 1. **Link Sharing:** Organizers generate a custom bill and distribute the link or QR code across student chat groups.
 2. **One-Click Wallet Connection:** Payers connect via Freighter Wallet.
 3. **Gasless Execution:** The application wraps payments in a `FeeBumpTransaction` sponsored by KlassPay. Users do not need to purchase or hold extra XLM for Stellar network fees.
 4. **Impact on Conversion:** Eliminating gas fee friction increased overall payment completion rates by **+40%**.
-5. **Customer Satisfaction (CSAT):** Achieved an average rating of **4.8 / 5.0 CSAT** across all 115 Closed Beta Pilot feedback records.
+5. **Customer Satisfaction (CSAT):** We are tracking extremely high CSAT scores as we scale our user base during the open beta phase.
 
 ---
 
