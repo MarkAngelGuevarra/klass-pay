@@ -10,7 +10,6 @@
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-klass--pay.vercel.app-blue?style=for-the-badge&logo=vercel)](https://klass-pay.vercel.app/)
 [![Stellar Mainnet](https://img.shields.io/badge/Stellar%20Mainnet-Live-success?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
-[![CSAT Score](https://img.shields.io/badge/CSAT-4.8%2F5.0-orange?style=for-the-badge)](https://docs.google.com/spreadsheets/d/1wVUU7dA9LYpTh3xD6160iHV0KXrAzl-5a9QBc02mbXk/edit?usp=sharing)
 [![Status](https://img.shields.io/badge/Status-Mainnet%20Open%20Beta-purple?style=for-the-badge)](#-user-onboarding)
 
 ---
@@ -22,9 +21,7 @@
 | 🌐 **Live Demo Application** | [klass-pay.vercel.app](https://klass-pay.vercel.app/) | Production dApp on Vercel |
 | 📜 **Stellar Mainnet Contract** | [`CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ) | Verified Soroban Mainnet Contract |
 | 🔑 **Fee Sponsor Wallet** | [`GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD`](https://stellar.expert/explorer/public/account/GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD) | Mainnet Gasless Fee Sponsor Account |
-| 🎨 **Pitch Deck** | [View on Canva](https://canva.link/au4fo5k0t0do5ew) | Official Product Presentation |
 | 📹 **Demo Video** | [Watch on Loom](https://www.loom.com/share/a19c53a76a784381924897b8f5d7b3c9) | Walkthrough & Live Contract Execution |
-| 📝 **User Onboarding Form** | [View Google Form](https://docs.google.com/forms/) | Open Beta User Registration |
 | ✍️ **Dev.to Technical Article** | [Read on Dev.to](https://dev.to/markyy0411/building-klasspay-a-gasless-split-payment-engine-on-stellar-soroban-85p) | Soroban & Fee Sponsorship Deep-Dive |
 | 🐦 **Twitter Launch Announcement** | [View on X/Twitter](https://x.com/eyyowitsmark/status/2071961241040646601?s=20) | Mainnet Launch Post |
 | 🐦 **Twitter Level 7 Update** | [View on X/Twitter](https://x.com/eyyowitsmark/status/2071964990886883653?s=20) | Level 7 Feature Update Post |
@@ -59,7 +56,7 @@ KlassPay fulfills the requirements set for **Level 6 (Mainnet)** and **Level 7 (
 - [x] **Mainnet Smart Contract Deployed:** Contract ID [`CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
 - [x] **Fee Sponsorship (Black Belt Feature):** Gasless transactions implemented using Stellar `FeeBumpTransaction` with sponsor wallet [`GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD`](https://stellar.expert/explorer/public/account/GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD).
 - [x] **Community Contribution:** Technical blog published on [Dev.to](https://dev.to/markyy0411/building-klasspay-a-gasless-split-payment-engine-on-stellar-soroban-85p).
-- [x] **Pitch Deck & Video:** [Canva Pitch Deck](https://canva.link/au4fo5k0t0do5ew) & [Loom Demo Video](https://www.loom.com/share/a19c53a76a784381924897b8f5d7b3c9).
+- [x] **Demo Video:** [Loom Demo Video](https://www.loom.com/share/a19c53a76a784381924897b8f5d7b3c9).
 - [x] **Audit / Security Review Proof:** [View Audit Report](./audit_report.md).
 - [x] **Real Adoption & Mainnet Users:** Application is live on Mainnet and actively processing transactions. Initial on-chain transaction tracking is visible on Stellar Expert.
 
@@ -77,18 +74,16 @@ KlassPay fulfills the requirements set for **Level 6 (Mainnet)** and **Level 7 (
 
 KlassPay is officially in the Open Beta phase on Mainnet. Our priority is frictionless onboarding via Gasless transactions.
 
-### 📊 User Registration & Feedback Pipeline
-To comply with the bootcamp growth requirements, we have established a structured feedback pipeline:
-- **Registration & Feedback Form:** [Google Form for Pilot Users](https://docs.google.com/forms/)
-- **Data Export Strategy:** As users register, their data (Wallet, Name, Email, Feedback) will be periodically exported to CSV format for architectural analysis.
-- **Monthly Growth Report:** See [monthly_growth_report.md](./monthly_growth_report.md) for our detailed technical rollout and future acquisition strategy.
+### 📊 User Onboarding Pipeline & Growth Strategy
+To scale adoption during our Open Beta, we follow a transparent technical onboarding architecture:
+- **Data Export Strategy:** Organizers and treasurers can export contributor rosters directly to CSV via our frontend interface for offline tracking and accounting.
+- **Monthly Growth Report:** See [monthly_growth_report.md](./monthly_growth_report.md) for our detailed infrastructure metrics and future user acquisition strategy.
 
-### ⚙️ Onboarding Pipeline & Conversion Dynamics
-1. **Link Sharing:** Organizers generate a custom bill and distribute the link or QR code across student chat groups.
-2. **One-Click Wallet Connection:** Payers connect via Freighter Wallet.
-3. **Gasless Execution:** The application wraps payments in a `FeeBumpTransaction` sponsored by KlassPay. Users do not need to purchase or hold extra XLM for Stellar network fees.
-4. **Impact on Conversion:** Eliminating gas fee friction increased overall payment completion rates by **+40%**.
-5. **Customer Satisfaction (CSAT):** We are tracking extremely high CSAT scores as we scale our user base during the open beta phase.
+### ⚙️ Onboarding Flow
+1. **Link Sharing:** Organizers generate a custom bill and distribute the link across student group chats.
+2. **One-Click Wallet Connection:** Payers connect via Freighter Wallet (only needing ~1 XLM balance to participate).
+3. **Gasless Execution:** The application wraps payments in a `FeeBumpTransaction` sponsored by our Relayer backend. Users pay $0 in Stellar network gas fees.
+4. **Adoption Tracking:** Live transaction volume and contributor growth are tracked directly on-chain via Stellar Expert as we scale user onboarding.
 
 ---
 
@@ -98,28 +93,23 @@ KlassPay evolved through continuous user feedback cycles. Below are the key iter
 
 1. **Gasless Fee Sponsorship (Eliminating Onboarding Friction)**
    - *Problem:* Students found acquiring extra XLM just for transaction fees confusing and prohibitive.
-   - *Solution:* Implemented `FeeBumpTransaction` in the frontend and contract integration layer, allowing our sponsor wallet to cover network fees.
-   - *Git Commit Link:* [View Commit `f04ab11`](https://github.com/MarkAngelGuevarra/klass-pay/commit/f04ab11aa87d7f8aa6f1f88ab5a0c830d30904e1)
+   - *Solution:* Implemented `FeeBumpTransaction` in the frontend and Supabase Relayer integration layer, allowing our sponsor wallet to cover network gas fees.
 
 2. **GCash Offramp & Integration UI**
    - *Problem:* Organizers needed a simple way to transfer collected XLM into local Philippine fiat (GCash) upon bill completion.
-   - *Solution:* Built an automated settlement trigger and GCash offramp Closed Beta Pilot interface for one-click withdrawals.
-   - *Git Commit Link:* [View Commit `00d10c2`](https://github.com/MarkAngelGuevarra/klass-pay/commit/00d10c2ae8ea9d6f66d68af306be715df5b4e93b)
+   - *Solution:* Built an automated settlement trigger and GCash offramp interface for one-click withdrawals.
 
 3. **Toast Notifications & Real-Time Visual Feedback**
    - *Problem:* Users were uncertain if their transactions were confirmed on the Stellar network.
    - *Solution:* Added real-time toast notifications, dynamic progress bar updates, and status indicators.
-   - *Git Commit Link:* [View Commit `5aa29aa`](https://github.com/MarkAngelGuevarra/klass-pay/commit/5aa29aaa42eab998a55e9308a88cf9af98dfb4b7)
 
 4. **Level 7 Enhancements (Dark Mode, CSV Export, Growth Report)**
    - *Problem:* Organizers requested offline CSV export capabilities, and users requested a dark theme.
    - *Solution:* Integrated global dark mode, CSV exporter for contributor lists, and published the monthly growth report.
-   - *Git Commit Link:* [View Commit `282a5dc`](https://github.com/MarkAngelGuevarra/klass-pay/commit/282a5dc92763f47b4a12dd71e5bba41d65ca1845)
 
-5. **User Feedback Iteration Summary & Documentation Hardening**
-   - *Problem:* Need for comprehensive feedback tracking and dataset documentation integration.
-   - *Solution:* Formatted and integrated user feedback metrics, dataset links, and iteration history.
-   - *Git Commit Link:* [View Commit `0103ade`](https://github.com/MarkAngelGuevarra/klass-pay/commit/0103adef2c6551592b61667f48c5f920e44e37b3)
+5. **Gamified Onboarding & Player Guide**
+   - *Problem:* Brand-new Web3 users needed guidance on connecting wallets and understanding test balances.
+   - *Solution:* Implemented an interactive 3-mission walkthrough directly on the home interface explaining the 1 XLM minimum balance and free gas mechanics.
 
 ### 🔮 Next Phase Improvements (Based on Feedback)
 Based on our latest user feedback surveys, we are actively planning the next evolution of KlassPay to further improve user retention and product-market fit:

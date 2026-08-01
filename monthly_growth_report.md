@@ -17,8 +17,8 @@ Rather than prematurely scaling marketing, we prioritized building a completely 
 ## 2. Beta Pilot & Initial User Acquisition
 To ensure our Gasless architecture functioned safely in a production environment, we commenced our initial "Friends and Family" Closed Beta on Mainnet.
 
-- **Active Testers:** Conducted internal testing with our team and a select cohort of beta users to validate end-to-end payment flows.
-- **Feedback Collection:** Deployed a Google Form to gather initial sentiment. Feedback was overwhelmingly positive regarding the lack of gas fees and the smooth Freighter integration. We are now systematically scaling our user acquisition efforts across student organizations for the upcoming month.
+- **Active Testers:** Conducted internal testing with our team and a select cohort of beta users to validate end-to-end payment flows on Mainnet.
+- **Feedback Collection:** Initial feedback confirmed smooth wallet connection and accurate Gasless fee relayer execution. Formal user conversion and satisfaction metrics will be systematically tracked and reported during our upcoming open beta scaling phase.
 
 ## 3. Product Iterations & Fixes
 Based on initial testing and architectural reviews, the following major updates were deployed to `main`:
