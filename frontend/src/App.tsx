@@ -91,16 +91,7 @@ export default function App() {
     } catch (e: any) {
       if (e.message.includes('NotFound') || e.message.includes('Error(Contract, #2)')) {
         if (id === currentBillId) {
-          // If the RPC is lagging behind the blockchain for a newly created bill, fake it so the UI works for the demo
-          setBill((prev: any) => prev || {
-            organizer: address,
-            target: target || 1, // fallback if target is unknown
-            funded: 0,
-            paid: 0,
-            settled: false,
-            payers: []
-          });
-          setError(null);
+          setError('Waiting for network confirmation...');
         } else {
           setBill(null);
           setBillMetadata(null);
@@ -167,22 +158,7 @@ export default function App() {
           { value: payAmount, type: 'u32' },
         ];
       
-      // FIXED: Use signXDR from useWallet()
-      try {
-        await invokeWrite('pay', address, signXDR, args);
-      } catch (simError: any) {
-        console.warn('Simulation failed due to RPC lag, bypassing for demo UI', simError);
-      }
-
-      // Artificially update UI instantly for a snappy demo feel
-      setBill((prev: any) => prev ? {
-        ...prev,
-        funded: prev.funded + payAmount,
-        paid: prev.paid + payAmount,
-        payers: prev.payers.includes(address) ? prev.payers : [...prev.payers, address],
-        settled: prev.funded + payAmount >= prev.target
-      } : prev);
-      
+      await invokeWrite('pay', address, signXDR, args);
       await handleGetBill(currentBillId);
     } catch (e: any) {
       setError('Pay error: ' + e.message);
@@ -682,8 +658,8 @@ export default function App() {
                 </ul>
               </>
             ) : (
-               <div className="msg msg--error" style={{ textAlign: 'center' }}>
-                 This Bill ID does not exist on the blockchain!
+               <div className="msg msg--error" style={{ textAlign: 'center', background: error === 'Waiting for network confirmation...' ? 'rgba(59, 130, 246, 0.1)' : undefined, borderColor: error === 'Waiting for network confirmation...' ? '#3B82F6' : undefined, color: error === 'Waiting for network confirmation...' ? 'var(--text)' : undefined }}>
+                 {error === 'Waiting for network confirmation...' ? '⏳ Waiting for network confirmation... (Auto-refreshing every 5 seconds)' : 'This Bill ID does not exist on the blockchain!'}
                </div>
             )}
             
