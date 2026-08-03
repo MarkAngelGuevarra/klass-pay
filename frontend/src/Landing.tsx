@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Wallet, Zap, Shield, ChevronRight, AlertTriangle, CheckCircle, MessageSquare } from 'lucide-react';
@@ -7,6 +7,15 @@ import PaymentHistory from './PaymentHistory';
 
 export default function Landing() {
   const navigate = useNavigate();
+  const [darkMode, setDarkMode] = useState(true);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  }, [darkMode]);
 
   const [formData, setFormData] = useState({ Name: '', Email: '', Message: '' });
   const [status, setStatus] = useState('');
@@ -46,9 +55,19 @@ export default function Landing() {
         <h1 style={{ margin: 0, fontSize: '1.5rem', background: 'linear-gradient(90deg, var(--primary), var(--secondary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
           💸 KlassPay
         </h1>
-        <button className="btn" style={{ width: 'auto', padding: '0.5rem 1.5rem', borderRadius: '20px' }} onClick={() => navigate('/app')}>
-          Launch App
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+          <button 
+            onClick={() => setDarkMode(!darkMode)} 
+            style={{ background: 'transparent', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}
+            aria-label="Toggle theme"
+            title="Switch theme"
+          >
+            {darkMode ? '☀️' : '🌙'}
+          </button>
+          <button className="btn" style={{ width: 'auto', padding: '0.5rem 1.5rem', borderRadius: '20px' }} onClick={() => navigate('/app')}>
+            Launch App
+          </button>
+        </div>
       </header>
 
       {/* Hero Section */}

@@ -16,7 +16,7 @@ export default function App() {
 
   const [currentBillId, setCurrentBillId] = useState<number | null>(initialBillId);
   const [bill, setBill] = useState<BillInfo | null>(null);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   
   // GCash Simulation State
   const [isWithdrawing, setIsWithdrawing] = useState(false);
@@ -24,10 +24,9 @@ export default function App() {
 
   useEffect(() => {
     if (darkMode) {
-      // Apply dark theme identifier; ensure CSS respects data-theme="dark"
       document.documentElement.setAttribute('data-theme', 'dark');
     } else {
-      document.documentElement.removeAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', 'light');
     }
   }, [darkMode]);
   
@@ -350,7 +349,7 @@ export default function App() {
           aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'} 
           style={{ position: 'absolute', top: 0, right: 0, background: 'transparent', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}
         >
-          {darkMode ? '🌙' : '☀️'}
+          {darkMode ? '☀️' : '🌙'}
         </button>
         <h1 onClick={goHome} style={{cursor: 'pointer'}}>💸 KlassPay</h1>
         <p>The premium split-payment engine for students.</p>
