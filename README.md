@@ -21,6 +21,7 @@
 | 🌐 **Live Demo Application** | [klass-pay.vercel.app](https://klass-pay.vercel.app/) | Production dApp on Vercel |
 | 📜 **Stellar Mainnet Contract** | [`CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ) | Verified Soroban Mainnet Contract |
 | 🔑 **Fee Sponsor Wallet** | [`GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD`](https://stellar.expert/explorer/public/account/GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD) | Mainnet Gasless Fee Sponsor Account |
+| 📊 **Pitch Deck & Slides** | [View Canva Presentation](https://canva.link/au4fo5k0t0do5ew) | Complete Project Pitch & Overview Deck |
 | 📹 **Demo Video** | [Watch on Loom](https://www.loom.com/share/a19c53a76a784381924897b8f5d7b3c9) | Walkthrough & Live Contract Execution |
 | ✍️ **Dev.to Technical Article** | [Read on Dev.to](https://dev.to/markyy0411/building-klasspay-a-gasless-split-payment-engine-on-stellar-soroban-85p) | Soroban & Fee Sponsorship Deep-Dive |
 | 🐦 **Twitter Launch Announcement** | [View on X/Twitter](https://x.com/eyyowitsmark/status/2071961241040646601?s=20) | Mainnet Launch Post |
@@ -56,7 +57,7 @@ KlassPay fulfills the requirements set for **Level 6 (Mainnet)** and **Level 7 (
 - [x] **Mainnet Smart Contract Deployed:** Contract ID [`CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ)
 - [x] **Fee Sponsorship (Black Belt Feature):** Gasless transactions implemented using Stellar `FeeBumpTransaction` with sponsor wallet [`GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD`](https://stellar.expert/explorer/public/account/GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD).
 - [x] **Community Contribution:** Technical blog published on [Dev.to](https://dev.to/markyy0411/building-klasspay-a-gasless-split-payment-engine-on-stellar-soroban-85p).
-- [x] **Demo Video:** [Loom Demo Video](https://www.loom.com/share/a19c53a76a784381924897b8f5d7b3c9).
+- [x] **Pitch Deck & Demo Video:** [Canva Pitch Deck](https://canva.link/au4fo5k0t0do5ew) & [Loom Demo Video](https://www.loom.com/share/a19c53a76a784381924897b8f5d7b3c9).
 - [x] **Audit / Security Review Proof:** [View Audit Report](./audit_report.md).
 - [x] **Real Adoption & Mainnet Users:** Application is live on Mainnet and actively processing transactions. Initial on-chain transaction tracking is visible on Stellar Expert.
 
