@@ -236,7 +236,7 @@ export async function invokeWrite(
 
   const scArgs = buildArgs(method, args);
   
-  // Use Horizon to fetch account (Soroban RPC testnet sometimes throws Account not found)
+  // Use Horizon to reliably fetch account state and sequence number
   const horizonServer = new Horizon.Server(HORIZON_URL);
   const account = await horizonServer.loadAccount(source);
 

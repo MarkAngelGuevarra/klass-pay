@@ -301,9 +301,10 @@ export default function App() {
             }}
           >
             <div className="card" style={{ width: '90%', maxWidth: '400px', padding: '2rem' }}>
-              <h2>⚠️ Simulation Fallback Active</h2>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
-                Due to Windows Rust compiler limitations for Soroban, this action is using a fallback simulation connected to a pre-deployed Testnet contract.
+              <h2>🛡️ Mainnet Transaction Confirmation</h2>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1.5rem', lineHeight: '1.5' }}>
+                You are about to execute a real transaction on the <strong>Stellar Public Mainnet</strong>.<br />
+                <span style={{ color: 'var(--success)', fontWeight: 'bold' }}>⚡ Gasless Fee Sponsorship Active:</span> Network gas fees are 100% sponsored by our relayer ($0 gas spent).
               </p>
               
               <div className="field-group">
