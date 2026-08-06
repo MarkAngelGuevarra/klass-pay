@@ -3,6 +3,7 @@ import { useWallet } from './wallet';
 import { simulate, invokeWrite, BillInfo } from './sorobanClient';
 import { motion, AnimatePresence } from 'framer-motion';
 import { saveBillMetadata, getBillMetadata } from './firebase';
+import ThemeToggle from './ThemeToggle';
 
 export default function App() {
   // FIXED: Destructure the correct variables from wallet.ts
@@ -16,19 +17,10 @@ export default function App() {
 
   const [currentBillId, setCurrentBillId] = useState<number | null>(initialBillId);
   const [bill, setBill] = useState<BillInfo | null>(null);
-  const [darkMode, setDarkMode] = useState(true);
   
   // GCash Simulation State
   const [isWithdrawing, setIsWithdrawing] = useState(false);
   const [withdrawStep, setWithdrawStep] = useState(0);
-
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-  }, [darkMode]);
   
   const [target, setTarget] = useState(100);
   const [billName, setBillName] = useState('');
@@ -345,13 +337,7 @@ export default function App() {
         )}
       </AnimatePresence>
       <div className="header" style={{ position: 'relative' }}>
-        <button 
-          onClick={() => setDarkMode(!darkMode)} 
-          aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'} 
-          style={{ position: 'absolute', top: 0, right: 0, background: 'transparent', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}
-        >
-          {darkMode ? '☀️' : '🌙'}
-        </button>
+        <ThemeToggle style={{ position: 'absolute', top: 0, right: 0 }} />
         <h1 onClick={goHome} style={{cursor: 'pointer'}}>💸 KlassPay</h1>
         <p>The premium split-payment engine for students.</p>
       </div>
