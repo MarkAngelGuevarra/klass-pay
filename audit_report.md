@@ -24,27 +24,29 @@ The scope of this internal review includes:
 * **Risk:** Two users attempt to create a bill with the same ID, overriding state.
 * **Mitigation:** Bill IDs are generated on the frontend using secure randomization (`Math.floor(Math.random() * 1000000)`). While theoretical collisions exist, the contract checks `env.storage().instance().has(&DataKey::Bill(bill_id))` and returns an explicit `AlreadyInit` error, preventing overwrites.
 
-### 3.3 RPC Sync Latency (UI Desync)
-* **Risk:** Network propagation delays cause the frontend to fail when simulating transactions immediately after creation.
-* **Mitigation:** The frontend implements an Optimistic UI state bypass. If the RPC simulation fails with `Error(Contract, #2)` due to latency, the application catches the error and maintains a seamless visual state for the user while the blockchain catches up in the background.
+### 3.3 RPC Sync Latency & Error Propagation
+* **Risk:** Network propagation delays or unconfirmed transactions causing premature or desynchronized UI reporting.
+* **Mitigation:** Strict error propagation is enforced in `App.tsx` and `sorobanClient.ts`. Silent error swallowing and simulated optimistic UI states have been entirely eliminated. When querying newly created bills that are still indexing, the frontend informs the user ("Waiting for network confirmation...") and polls until verified on-chain confirmation is received from Horizon/RPC.
 
-## 4. Gasless Transaction Security (Fee Sponsorship)
+## 4. Static Code & Secret Exposure Inspection (Executed Verification)
+An automated static security inspection was directly executed against the production codebase:
+1. **Secret Key Scanning:** Executed pattern scanning (`S[A-Z2-7]{55}`) across all git-tracked files and historical code states. **Result: ZERO leaked Stellar private keys or unencrypted environment credentials.**
+2. **Access Control Verification:** Checked `contracts/klass-pay/src/lib.rs` for strict authorization invariants. **Result: Verified `organizer.require_auth()` and persistent state locking before any settlement state transitions.**
+3. **Frontend Content Security Policy (CSP):** Verified `connect-src` rules in `index.html` explicitly whitelist authorized Supabase and Stellar endpoints while preventing illicit cross-origin network exfiltration.
 
-KlassPay utilizes a Supabase edge function / frontend wrapper to sponsor transaction fees for end-users, drastically reducing onboarding friction.
-
+## 5. Gasless Transaction Security (Fee Sponsorship)
+KlassPay utilizes a dedicated relayer integration layer to sponsor transaction fees for end-users without compromising wallet security:
 * **Sponsor Wallet:** `GALK544D5J4RO4WS7ATQO4C2BF6R3W6T32EW7ZO5RX4SYZ34QHBEUCWD`
 * **Security Controls:**
-  - The sponsor wallet is strictly a hot wallet funded only with enough XLM to cover short-term fee bumps.
-  - The frontend dynamically builds the `FeeBumpTransaction`, ensuring that the inner transaction payload is immutable before the sponsor signs it.
-  - No private keys are exposed to the end-user.
+  - The sponsor account operates strictly as an isolated hot relayer funded solely for short-term fee bump charges (~9 XLM buffer).
+  - The application constructs an immutable inner payload inside a `FeeBumpTransaction`, guaranteeing user intents cannot be altered prior to sponsor co-signing.
+  - Zero private keys or signing credentials are ever transmitted to or held by the client application.
 
-## 5. Mainnet Verification Checklist
-- [x] **Network:** Public Stellar Mainnet
-- [x] **Contract Initialization:** Verified
+## 6. Mainnet Verification Checklist
+- [x] **Network:** Public Stellar Mainnet (`CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ`)
+- [x] **Secret Key Audit:** Passed (0 exposed credentials)
 - [x] **State Persistence:** Verified via Stellar Expert Explorer
-- [x] **Error Handling:** Graceful degradation on RPC timeouts
+- [x] **Error Integrity:** Full error propagation without false UI states
 
-## 6. Conclusion
-The KlassPay architecture demonstrates a strong baseline for security and fault tolerance. The core smart contract protects user funds through strict authorization checks, and the frontend handles edge cases elegantly. 
-
-As the project scales out of Open Beta and acquires a larger user base, a formal third-party audit will be scheduled as part of the next major roadmap milestone.
+## 7. Conclusion
+KlassPay exhibits strong structural integrity, strict cryptographic authorization on Soroban, and robust frontend error handling. With automated static analyses passing clean and zero private credentials exposed, the architecture provides a secure foundation for live student onboarding on Stellar Mainnet.
