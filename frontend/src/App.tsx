@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useWallet } from './wallet';
 import { simulate, invokeWrite, BillInfo } from './sorobanClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { saveBillMetadata, getBillMetadata } from './firebase';
+import { Sparkles, Trophy, Zap } from 'lucide-react';
+import { saveBillMetadata, getBillMetadata, BillMetadata } from './firebase';
 import ThemeToggle from './ThemeToggle';
 
 export default function App() {
+  const navigate = useNavigate();
   // FIXED: Destructure the correct variables from wallet.ts
   const { address, connect, signXDR, network } = useWallet();
   const isConnected = !!address;
@@ -25,7 +28,8 @@ export default function App() {
   const [target, setTarget] = useState(100);
   const [billName, setBillName] = useState('');
   const [billDescription, setBillDescription] = useState('');
-  const [billMetadata, setBillMetadata] = useState<{name: string, description: string} | null>(null);
+  const [selectedCurrency, setSelectedCurrency] = useState<'XLM' | 'USDC'>('XLM');
+  const [billMetadata, setBillMetadata] = useState<BillMetadata | null>(null);
   
   const [payAmount, setPayAmount] = useState(10);
   const [payCurrency, setPayCurrency] = useState('XLM'); // For Path Payments
@@ -75,7 +79,10 @@ export default function App() {
       // Fetch Firebase Metadata
       const meta = await getBillMetadata(id);
       if (meta) {
-        setBillMetadata(meta as {name: string, description: string});
+        setBillMetadata(meta);
+        if (meta.currency) {
+          setPayCurrency(meta.currency);
+        }
       }
       
       setError(null);
@@ -118,7 +125,7 @@ export default function App() {
       await invokeWrite('create', address, signXDR, args);
       
       // Save metadata to Firebase
-      await saveBillMetadata(newBillId, billName || 'Class Fund', billDescription || 'Collected via KlassPay');
+      await saveBillMetadata(newBillId, billName || 'Class Fund', billDescription || 'Collected via KlassPay', selectedCurrency);
 
       setCurrentBillId(newBillId);
       // Update the URL without reloading the page
@@ -207,6 +214,8 @@ export default function App() {
       showToast(`Successfully deposited ₱${phpAmount} via GCash Anchor! Equivalent XLM added to wallet.`);
     }, 3000);
   };
+
+  const currency = billMetadata?.currency || 'XLM';
 
   return (
     <div className="container">
@@ -337,6 +346,29 @@ export default function App() {
         )}
       </AnimatePresence>
       <div className="header" style={{ position: 'relative' }}>
+        <button
+          onClick={() => navigate('/dashboard')}
+          className="btn"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: 'auto',
+            padding: '0.45rem 0.9rem',
+            fontSize: '0.85rem',
+            background: 'rgba(139, 92, 246, 0.15)',
+            border: '1px solid rgba(139, 92, 246, 0.3)',
+            color: 'var(--primary)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            borderRadius: '12px',
+            cursor: 'pointer',
+            fontWeight: 600,
+          }}
+        >
+          📊 Treasurer Dashboard
+        </button>
         <ThemeToggle style={{ position: 'absolute', top: 0, right: 0 }} />
         <h1 onClick={goHome} style={{cursor: 'pointer'}}>💸 KlassPay</h1>
         <p>The premium split-payment engine for students.</p>
@@ -458,7 +490,65 @@ export default function App() {
             </div>
 
             <div className="field-group">
-              <label className="wallet-bar__label">Target Amount (XLM)</label>
+              <label className="wallet-bar__label">Settlement Asset</label>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginTop: '0.35rem' }}>
+                <button
+                  type="button"
+                  className="btn"
+                  style={{
+                    width: '100%',
+                    background: selectedCurrency === 'XLM' ? 'linear-gradient(135deg, var(--primary), var(--secondary))' : 'var(--input-bg)',
+                    border: selectedCurrency === 'XLM' ? '1px solid var(--primary)' : '1px solid var(--input-border)',
+                    color: selectedCurrency === 'XLM' ? '#ffffff' : 'var(--text-muted)',
+                    padding: '0.65rem 1rem',
+                    borderRadius: '12px',
+                    fontSize: '0.9rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.4rem',
+                  }}
+                  onClick={() => {
+                    setSelectedCurrency('XLM');
+                    setPayCurrency('XLM');
+                  }}
+                >
+                  ⚡ Native XLM
+                </button>
+                <button
+                  type="button"
+                  className="btn"
+                  style={{
+                    width: '100%',
+                    background: selectedCurrency === 'USDC' ? 'linear-gradient(135deg, #005CEE, #38BDF8)' : 'var(--input-bg)',
+                    border: selectedCurrency === 'USDC' ? '1px solid #005CEE' : '1px solid var(--input-border)',
+                    color: selectedCurrency === 'USDC' ? '#ffffff' : 'var(--text-muted)',
+                    padding: '0.65rem 1rem',
+                    borderRadius: '12px',
+                    fontSize: '0.9rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.4rem',
+                  }}
+                  onClick={() => {
+                    setSelectedCurrency('USDC');
+                    setPayCurrency('USDC');
+                  }}
+                >
+                  💵 Stellar USDC
+                </button>
+              </div>
+            </div>
+
+            <div className="field-group">
+              <label className="wallet-bar__label">Target Amount ({selectedCurrency})</label>
               <input
                 className="input"
                 type="number"
@@ -509,140 +599,223 @@ export default function App() {
             )}
 
             {bill ? (
-              <>
-                {bill.settled && (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
-                    <div className="msg msg--ok" style={{ background: 'linear-gradient(90deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05))', border: '1px solid var(--success)'}}>
-                      🎉 <strong>Goal reached!</strong> This bill has been fully paid off.
-                    </div>
-                      <button
-                        className="btn"
-                        style={{ background: '#3a3a3a', cursor: 'not-allowed', opacity: 0.6 }}
-                        disabled
-                        title="Withdrawal requires the upgraded contract to be deployed first. Coming soon."
-                      >
-                        📱 Withdraw to GCash (Coming Soon)
-                      </button>
-                  </div>
-                )}
-                <table className="bill-table">
-                  <tbody>
-                    <tr>
-                      <td>Organizer</td>
-                      <td>{bill.organizer.substring(0, 8)}...{bill.organizer.slice(-8)}</td>
-                    </tr>
-                    <tr>
-                      <td>Target</td>
-                      <td>{bill.target.toLocaleString()} XLM</td>
-                    </tr>
-                    <tr>
-                      <td>Funded</td>
-                      <td>{bill.funded.toLocaleString()} / {bill.target.toLocaleString()} ({Math.floor((bill.funded / bill.target) * 100)}%)</td>
-                    </tr>
-                    <tr>
-                      <td>Settled</td>
-                      <td>{bill.settled ? <span className="status status--ok">✔ Yes</span> : <span className="status status--loading">Pending</span>}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div className="progress-bar">
-                  <div
-                    className="progress-bar__fill"
-                    style={{ width: `${Math.min((bill.funded / bill.target) * 100, 100)}%` }}
-                  />
-                </div>
+              (() => {
+                const percentage = bill.target > 0 ? Math.round((bill.funded / bill.target) * 100) : 0;
+                const isHalfway = percentage >= 50 && percentage < 100;
+                const isCompleted = percentage >= 100 || bill.settled;
 
-                <table className="bill-table">
-                  <thead>
-                    <tr>
-                      <th>Status</th>
-                      <th>Target</th>
-                      <th>Paid</th>
-                      <th>Remaining</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <span className={bill.settled ? "status status--ok" : "status status--pending"}>
-                          {bill.settled ? 'Settled' : 'Active'}
+                return (
+                  <>
+                    {/* Milestone Celebration Banner */}
+                    <AnimatePresence>
+                      {isCompleted && (
+                        <motion.div
+                          className="celebration-card"
+                          initial={{ opacity: 0, scale: 0.9, y: -10 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.9 }}
+                          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                        >
+                          <div className="celebration-card__content">
+                            <Sparkles className="celebration-sparkle" size={22} />
+                            <span className="celebration-card__title">
+                              🎉 Goal Reached! All {bill.target.toLocaleString()} {currency} has been pooled successfully!
+                            </span>
+                            <Sparkles className="celebration-sparkle" size={22} />
+                          </div>
+                          {bill.settled && (
+                            <div style={{ marginTop: '1rem' }}>
+                              <button
+                                className="btn"
+                                style={{ background: '#3a3a3a', cursor: 'not-allowed', opacity: 0.6 }}
+                                disabled
+                                title="Withdrawal requires the upgraded contract to be deployed first. Coming soon."
+                              >
+                                📱 Withdraw to GCash (Coming Soon)
+                              </button>
+                            </div>
+                          )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    <table className="bill-table">
+                      <tbody>
+                        <tr>
+                          <td>Organizer</td>
+                          <td>{bill.organizer.substring(0, 8)}...{bill.organizer.slice(-8)}</td>
+                        </tr>
+                        <tr>
+                          <td>Target</td>
+                          <td>{bill.target.toLocaleString()} {currency}</td>
+                        </tr>
+                        <tr>
+                          <td>Funded</td>
+                          <td>{bill.funded.toLocaleString()} / {bill.target.toLocaleString()} {currency} ({percentage}%)</td>
+                        </tr>
+                        <tr>
+                          <td>Settled</td>
+                          <td>{bill.settled ? <span className="status status--ok">✔ Yes</span> : <span className="status status--loading">Pending</span>}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    {/* Gamified Milestone Status Badges & Progress Bar */}
+                    <div className="milestone-container">
+                      <div className="milestone-header">
+                        <span className="milestone-header__label">
+                          Progress: <strong style={{ color: 'var(--text-main)' }}>{percentage}%</strong>
                         </span>
-                      </td>
-                      <td>{bill.target} XLM</td>
-                      <td>{bill.paid} XLM</td>
-                      <td>{bill.target - bill.paid} XLM</td>
-                    </tr>
-                  </tbody>
-                </table>
+                        <div className="milestone-badges">
+                          <AnimatePresence mode="wait">
+                            {isCompleted ? (
+                              <motion.div
+                                key="victory-badge"
+                                className="milestone-badge milestone-badge--100"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.3 }}
+                              >
+                                <Trophy size={14} />
+                                <span>🏆 100% Goal Reached!</span>
+                              </motion.div>
+                            ) : isHalfway ? (
+                              <motion.div
+                                key="halfway-badge"
+                                className="milestone-badge milestone-badge--50"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.3 }}
+                              >
+                                <Zap size={14} />
+                                <span>⚡ 50% Halfway Milestone Unlocked!</span>
+                              </motion.div>
+                            ) : null}
+                          </AnimatePresence>
+                        </div>
+                      </div>
 
-                {!bill.settled && (
-                  <div className="card" style={{ marginTop: '2rem', background: 'var(--surface)' }}>
-                    <h3>Make a Payment</h3>
-                    
-                    <div className="field-group">
-                      <label className="wallet-bar__label">Select Currency (Path Payments)</label>
-                      <select 
-                        className="input" 
-                        value={payCurrency}
-                        onChange={(e) => setPayCurrency(e.target.value)}
-                        style={{ marginBottom: '1rem', cursor: 'pointer' }}
-                      >
-                        <option value="XLM">Native XLM</option>
-                        <option value="USDC">USDC (Stellar)</option>
-                        <option value="BTC">Bitcoin (Bridged)</option>
-                      </select>
+                      <div className={`progress-bar ${isCompleted ? 'progress-bar--victory' : isHalfway ? 'progress-bar--shimmer' : ''}`}>
+                        <motion.div
+                          className={`progress-bar__fill ${isCompleted ? 'progress-bar__fill--victory' : isHalfway ? 'progress-bar__fill--halfway' : ''}`}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${Math.min(percentage, 100)}%` }}
+                          transition={{ duration: 1.2, ease: "easeOut" }}
+                        />
+                        {/* 50% Milestone Checkpoint */}
+                        <div 
+                          className={`milestone-checkpoint milestone-checkpoint--50 ${percentage >= 50 ? 'milestone-checkpoint--active' : ''}`}
+                          style={{ left: '50%' }}
+                        >
+                          <div className="milestone-checkpoint__dot" />
+                          <span className="milestone-checkpoint__label">50%</span>
+                        </div>
+                        {/* 100% Milestone Checkpoint */}
+                        <div 
+                          className={`milestone-checkpoint milestone-checkpoint--100 ${percentage >= 100 || bill.settled ? 'milestone-checkpoint--active' : ''}`}
+                          style={{ left: '100%' }}
+                        >
+                          <div className="milestone-checkpoint__dot" />
+                          <span className="milestone-checkpoint__label">100%</span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="field-group">
-                      <label className="wallet-bar__label">Amount in {payCurrency}</label>
-                      <input
-                        className="input"
-                        type="number"
-                        value={payAmount}
-                        onChange={(e) => setPayAmount(Number(e.target.value))}
-                        min={1}
-                      />
-                    </div>
-                    
-                    {payCurrency !== 'XLM' && (
-                      <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
-                        * The Stellar DEX will automatically convert your {payCurrency} to XLM to fund the bill.
-                      </p>
+                    <table className="bill-table">
+                      <thead>
+                        <tr>
+                          <th>Status</th>
+                          <th>Target</th>
+                          <th>Paid</th>
+                          <th>Remaining</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <span className={bill.settled ? "status status--ok" : "status status--pending"}>
+                              {bill.settled ? 'Settled' : 'Active'}
+                            </span>
+                          </td>
+                          <td>{bill.target.toLocaleString()} {currency}</td>
+                          <td>{bill.funded.toLocaleString()} {currency}</td>
+                          <td>{Math.max(0, bill.target - bill.funded).toLocaleString()} {currency}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    {!bill.settled && (
+                      <div className="card" style={{ marginTop: '2rem', background: 'var(--surface)' }}>
+                        <h3>Make a Payment</h3>
+                        
+                        <div className="field-group">
+                          <label className="wallet-bar__label">Select Currency (Path Payments)</label>
+                          <select 
+                            className="input" 
+                            value={payCurrency}
+                            onChange={(e) => setPayCurrency(e.target.value)}
+                            style={{ marginBottom: '1rem', cursor: 'pointer' }}
+                          >
+                            <option value="XLM">Native XLM</option>
+                            <option value="USDC">USDC (Stellar)</option>
+                            <option value="BTC">Bitcoin (Bridged)</option>
+                          </select>
+                        </div>
+
+                        <div className="field-group">
+                          <label className="wallet-bar__label">Amount in {payCurrency}</label>
+                          <input
+                            className="input"
+                            type="number"
+                            value={payAmount}
+                            onChange={(e) => setPayAmount(Number(e.target.value))}
+                            min={1}
+                          />
+                        </div>
+                        
+                        {payCurrency !== currency && (
+                          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
+                            * The Stellar DEX will automatically convert your {payCurrency} to {currency} to fund the bill.
+                          </p>
+                        )}
+
+                        <button className="btn" onClick={handlePay} disabled={loading || payAmount <= 0}>
+                          {loading ? 'Processing...' : `Pay ${payAmount} ${payCurrency}`}
+                        </button>
+                      </div>
                     )}
 
-                    <button className="btn" onClick={handlePay} disabled={loading || payAmount <= 0}>
-                      {loading ? 'Processing...' : `Pay ${payAmount} ${payCurrency}`}
-                    </button>
-                  </div>
-                )}
-
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2rem', marginBottom: '1rem' }}>
-                  <h3 style={{ margin: 0, color: 'var(--text-muted)' }}>👥 Payers ({bill.payers.length})</h3>
-                  {bill.payers.length > 0 && (
-                    <button 
-                      onClick={() => {
-                        const csvContent = "data:text/csv;charset=utf-8,Wallet Address\n" + bill.payers.join("\n");
-                        const encodedUri = encodeURI(csvContent);
-                        const link = document.createElement("a");
-                        link.setAttribute("href", encodedUri);
-                        link.setAttribute("download", `bill_${currentBillId}_payers.csv`);
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                      }} 
-                      style={{ background: 'transparent', border: '1px solid var(--primary)', color: 'var(--primary)', padding: '0.3rem 0.8rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
-                    >
-                      📥 Export CSV
-                    </button>
-                  )}
-                </div>
-                <ul className="payer-list">
-                  {bill.payers.map((p, i) => (
-                    <li key={i}>{p.substring(0, 12)}...{p.slice(-12)}</li>
-                  ))}
-                  {bill.payers.length === 0 && <p style={{color: 'var(--text-muted)'}}>No one has paid yet.</p>}
-                </ul>
-              </>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2rem', marginBottom: '1rem' }}>
+                      <h3 style={{ margin: 0, color: 'var(--text-muted)' }}>👥 Payers ({bill.payers.length})</h3>
+                      {bill.payers.length > 0 && (
+                        <button 
+                          onClick={() => {
+                            const csvContent = "data:text/csv;charset=utf-8,Wallet Address\n" + bill.payers.join("\n");
+                            const encodedUri = encodeURI(csvContent);
+                            const link = document.createElement("a");
+                            link.setAttribute("href", encodedUri);
+                            link.setAttribute("download", `bill_${currentBillId}_payers.csv`);
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                          }} 
+                          style={{ background: 'transparent', border: '1px solid var(--primary)', color: 'var(--primary)', padding: '0.3rem 0.8rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
+                        >
+                          📥 Export CSV
+                        </button>
+                      )}
+                    </div>
+                    <ul className="payer-list">
+                      {bill.payers.map((p, i) => (
+                        <li key={i}>{p.substring(0, 12)}...{p.slice(-12)}</li>
+                      ))}
+                      {bill.payers.length === 0 && <p style={{color: 'var(--text-muted)'}}>No one has paid yet.</p>}
+                    </ul>
+                  </>
+                );
+              })()
             ) : (
                <div className="msg msg--error" style={{ textAlign: 'center', background: error === 'Waiting for network confirmation...' ? 'rgba(59, 130, 246, 0.1)' : undefined, borderColor: error === 'Waiting for network confirmation...' ? '#3B82F6' : undefined, color: error === 'Waiting for network confirmation...' ? 'var(--text)' : undefined }}>
                  {error === 'Waiting for network confirmation...' ? '⏳ Waiting for network confirmation... (Auto-refreshing every 5 seconds)' : 'This Bill ID does not exist on the blockchain!'}

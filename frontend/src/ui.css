@@ -259,21 +259,227 @@ body {
   color: var(--text-main);
 }
 
+/* Gamified Milestone Progress Bar & Badges */
+.milestone-container {
+  margin: 1.5rem 0 2rem 0;
+}
+
+.milestone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.milestone-header__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.milestone-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.milestone-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.milestone-badge--50 {
+  background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.45);
+  animation: milestonePulse 2s infinite ease-in-out;
+}
+
+.milestone-badge--100 {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+  animation: victoryPulse 2s infinite ease-in-out;
+}
+
 .progress-bar {
-  height: 12px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 6px;
-  overflow: hidden;
-  margin: 1.5rem 0;
+  position: relative;
+  height: 14px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+  margin: 0.5rem 0 2rem 0;
   border: 1px solid var(--glass-border);
 }
 
 .progress-bar__fill {
   height: 100%;
-  background: linear-gradient(90deg, #34d399, #10b981);
-  border-radius: 6px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 8px;
   transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+.progress-bar__fill--halfway {
+  background: linear-gradient(90deg, #8b5cf6, #ec4899, #34d399);
+  box-shadow: 0 0 14px rgba(139, 92, 246, 0.6);
+}
+
+.progress-bar__fill--victory {
+  background: linear-gradient(90deg, #10b981, #34d399, #6ee7b7, #10b981);
+  background-size: 200% 200%;
+  animation: milestoneShimmer 3s infinite linear;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.8);
+}
+
+.progress-bar--victory {
+  animation: victoryGlow 2s infinite ease-in-out;
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+.progress-bar--shimmer {
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.3);
+}
+
+/* Milestone Checkpoints */
+.milestone-checkpoint {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.milestone-checkpoint__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bg-color);
+  border: 2px solid var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+.milestone-checkpoint__label {
+  position: absolute;
+  top: 14px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.milestone-checkpoint--50.milestone-checkpoint--active .milestone-checkpoint__dot {
+  background: #8b5cf6;
+  border-color: #ffffff;
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.8);
+}
+
+.milestone-checkpoint--50.milestone-checkpoint--active .milestone-checkpoint__label {
+  color: #8b5cf6;
+}
+
+.milestone-checkpoint--100.milestone-checkpoint--active .milestone-checkpoint__dot {
+  background: #10b981;
+  border-color: #ffffff;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+}
+
+.milestone-checkpoint--100.milestone-checkpoint--active .milestone-checkpoint__label {
+  color: #10b981;
+}
+
+/* Celebration Card & Animations */
+.celebration-card {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.06));
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  text-align: center;
+}
+
+.celebration-card__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.celebration-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--success);
+  line-height: 1.4;
+}
+
+.celebration-sparkle {
+  color: #fbbf24;
+  animation: celebrationSparkle 2s infinite ease-in-out;
+  flex-shrink: 0;
+}
+
+/* Keyframes */
+@keyframes milestoneShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes victoryGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.4), inset 0 0 6px rgba(16, 185, 129, 0.2);
+    border-color: rgba(16, 185, 129, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(16, 185, 129, 0.8), 0 0 35px rgba(52, 211, 153, 0.4), inset 0 0 10px rgba(16, 185, 129, 0.3);
+    border-color: rgba(52, 211, 153, 0.8);
+  }
+}
+
+@keyframes milestonePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.45);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 0 18px rgba(139, 92, 246, 0.7);
+  }
+}
+
+@keyframes victoryPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.9), 0 0 35px rgba(52, 211, 153, 0.5);
+  }
+}
+
+@keyframes celebrationSparkle {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: rotate(15deg) scale(1.2);
+    opacity: 1;
+  }
 }
 
 .payer-list {

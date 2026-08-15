@@ -47,7 +47,25 @@ export default function Landing() {
         <h1 style={{ margin: 0, fontSize: '1.5rem', background: 'linear-gradient(90deg, var(--primary), var(--secondary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
           💸 KlassPay
         </h1>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button 
+            className="btn" 
+            style={{ 
+              width: 'auto', 
+              padding: '0.5rem 1.25rem', 
+              borderRadius: '20px', 
+              background: 'var(--glass-bg)', 
+              border: '1px solid var(--glass-border)', 
+              color: 'var(--text-main)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '0.4rem',
+              fontSize: '0.9rem'
+            }} 
+            onClick={() => navigate('/dashboard')}
+          >
+            📊 Treasurer Analytics
+          </button>
           <ThemeToggle />
           <button className="btn" style={{ width: 'auto', padding: '0.5rem 1.5rem', borderRadius: '20px' }} onClick={() => navigate('/app')}>
             Launch App
@@ -73,9 +91,26 @@ export default function Landing() {
           <p style={{ fontSize: '1.2rem', color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto 2.5rem auto', lineHeight: 1.6 }}>
             KlassPay is a trustless pooling engine built on Soroban. Easily collect funds from friends, roommates, or classmates without ever forcing them to buy XLM for gas.
           </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button className="btn" style={{ width: 'auto', padding: '1rem 2rem', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }} onClick={() => navigate('/app')}>
               Get Started <ChevronRight size={20} />
+            </button>
+            <button 
+              className="btn" 
+              style={{ 
+                width: 'auto', 
+                padding: '1rem 2rem', 
+                fontSize: '1.1rem', 
+                background: 'var(--glass-bg)', 
+                border: '1px solid var(--glass-border)', 
+                color: 'var(--text-main)', 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '0.5rem' 
+              }} 
+              onClick={() => navigate('/dashboard')}
+            >
+              📊 Treasurer Analytics
             </button>
             <a href="https://github.com" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
               <button className="btn" style={{ width: 'auto', padding: '1rem 2rem', fontSize: '1.1rem', background: 'transparent', border: '1px solid var(--glass-border)', color: 'var(--text)' }}>

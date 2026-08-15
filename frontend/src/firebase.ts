@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, doc, setDoc, getDoc, getDocs } from "firebase/firestore";
 
 // TODO: Replace these with your actual Firebase project config
 // 1. Go to console.firebase.google.com
@@ -18,12 +18,25 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
+export interface BillMetadata {
+  name: string;
+  description: string;
+  currency?: 'XLM' | 'USDC';
+  createdAt?: string;
+}
+
 // Helper functions for KlassPay
-export const saveBillMetadata = async (billId: number, name: string, description: string) => {
+export const saveBillMetadata = async (
+  billId: number,
+  name: string,
+  description: string,
+  currency: 'XLM' | 'USDC' = 'XLM'
+): Promise<void> => {
   try {
     await setDoc(doc(db, "bills", billId.toString()), {
       name,
       description,
+      currency,
       createdAt: new Date().toISOString()
     });
   } catch (e) {
@@ -31,15 +44,33 @@ export const saveBillMetadata = async (billId: number, name: string, description
   }
 };
 
-export const getBillMetadata = async (billId: number) => {
+export const getBillMetadata = async (billId: number): Promise<BillMetadata | null> => {
   try {
     const docRef = doc(db, "bills", billId.toString());
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      return docSnap.data();
+      return docSnap.data() as BillMetadata;
     }
   } catch (e) {
     console.error("Error fetching bill metadata:", e);
   }
   return null;
+};
+
+export const getAllBillsMetadata = async (): Promise<Array<{ id: number; metadata: BillMetadata }>> => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "bills"));
+    const results: Array<{ id: number; metadata: BillMetadata }> = [];
+    querySnapshot.forEach((docSnap) => {
+      const data = docSnap.data() as BillMetadata;
+      const id = parseInt(docSnap.id, 10);
+      if (!isNaN(id)) {
+        results.push({ id, metadata: data });
+      }
+    });
+    return results;
+  } catch (e) {
+    console.error("Error fetching all bills metadata:", e);
+    return [];
+  }
 };
