@@ -36,7 +36,13 @@
 
 KlassPay solves a massive problem for university students and organizers: the awkward, stressful, and messy process of collecting money for group projects, class funds, or shared events. Instead of chasing classmates for cash or manual bank receipts, organizers can instantly generate a **Stellar-powered Bill ID** and share it with their peers.
 
-### Features
+### 🔥 Level 5 Blue Belt Updates (August 2026)
+This month, KlassPay underwent a massive **Multi-Asset Analytics Update** to accelerate User Growth and Product Iteration:
+- **📊 Treasurer Analytics Dashboard (`/dashboard`):** A dedicated route for organizers featuring interactive SVG volume timeline charts and a live activity feed.
+- **💱 Multi-Asset USDC Simulation:** Organizers can explicitly toggle between **Native XLM** and **Stellar USDC** during bill creation. The frontend dynamically simulates and formats multi-token settlements across the entire UI while preserving Mainnet smart contract safety.
+- **🏆 Gamified Funding Milestones:** Integrated a `framer-motion` physics engine to render dynamic progress bars with glowing 50% halfway badges and 100% celebration banners to increase user retention.
+
+### Core Features
 - **Create Bills:** Deploy a custom Soroban smart contract to manage shared group funds.
 - **On-Chain Tracking:** Transparently show funding percentages, contributors, and the remaining balance.
 - **Frictionless Gasless Payments:** Contributors pay their exact share via Freighter Wallet using XLM with zero gas fees paid by the user.
