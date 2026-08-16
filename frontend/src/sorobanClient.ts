@@ -28,10 +28,13 @@ const RPC_URL = 'https://mainnet.sorobanrpc.com';
 const HORIZON_URL = 'https://horizon.stellar.org';
 const NETWORK_PASSPHRASE = Networks.PUBLIC;
 const BASE_FEE = '100';
-const TIMEOUT_SECONDS = 30;
+const TIMEOUT_SECONDS = 300; // Increased to 5 minutes to prevent txTOO_LATE (-3) error if user takes time to sign
 
 async function getSponsoredTransaction(signedTxXdr: string): Promise<string> {
-  const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sponsor-tx`, {
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const baseUrl = isLocalhost ? '/api/supabase' : import.meta.env.VITE_SUPABASE_URL;
+  
+  const response = await fetch(`${baseUrl}/functions/v1/sponsor-tx`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -261,8 +264,11 @@ export async function invokeWrite(
   /* Sign */
   const signedXdr = await signXDR(xdrString);
 
+  /* Wrap with Gasless Fee Sponsorship via Supabase */
+  const sponsoredXdr = await getSponsoredTransaction(signedXdr);
+
   /* Convert the signed XDR back into a transaction object */
-  const finalTx = TransactionBuilder.fromXDR(signedXdr, NETWORK_PASSPHRASE) as any;
+  const finalTx = TransactionBuilder.fromXDR(sponsoredXdr, NETWORK_PASSPHRASE) as any;
 
   /* Submit the fully signed Transaction to the network directly (bypassing blocked proxy) */
   const sendResult = await server.sendTransaction(finalTx);
