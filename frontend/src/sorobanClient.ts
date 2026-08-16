@@ -32,13 +32,21 @@ const TIMEOUT_SECONDS = 300; // Increased to 5 minutes to prevent txTOO_LATE (-3
 
 async function getSponsoredTransaction(signedTxXdr: string): Promise<string> {
   const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const baseUrl = isLocalhost ? '/api/supabase' : import.meta.env.VITE_SUPABASE_URL;
+  
+  // Fallback to hardcoded public keys in case Vercel env vars are missing
+  const fallbackUrl = 'https://xnevwhnnarntiybspdkq.supabase.co';
+  const fallbackAnon = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhuZXZ3aG5uYXJudGl5YnNwZGtxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyMzgzODIsImV4cCI6MjEwMDgxNDM4Mn0.7WGJYQcx4mMzYeJSLgUYmVKb6icqLnZAMhFzcjycfhM';
+  
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || fallbackUrl;
+  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || fallbackAnon;
+  
+  const baseUrl = isLocalhost ? '/api/supabase' : supabaseUrl;
   
   const response = await fetch(`${baseUrl}/functions/v1/sponsor-tx`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+      'Authorization': `Bearer ${anonKey}`
     },
     body: JSON.stringify({ signedTxXdr }) // Must match the backend variable name
   });
