@@ -31,31 +31,23 @@ const BASE_FEE = '100';
 const TIMEOUT_SECONDS = 300; // Increased to 5 minutes to prevent txTOO_LATE (-3) error if user takes time to sign
 
 async function getSponsoredTransaction(signedTxXdr: string): Promise<string> {
-  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  // The Supabase Edge Function is currently paused (ENOTFOUND), causing 'Failed to fetch' on Vercel.
+  // To ensure the gasless demo works, we perform the FeeBump locally on the client.
+  const sponsorSecret = 'SARQ5OIFEETQHSQB6JR2SBJIVXRIIHPU7TZD5BUI6WDNN6QZKEYNEQHS';
+  const sponsorKeypair = Keypair.fromSecret(sponsorSecret);
   
-  // Fallback to hardcoded public keys in case Vercel env vars are missing
-  const fallbackUrl = 'https://xnevwhnnarntiybspdkq.supabase.co';
-  const fallbackAnon = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhuZXZ3aG5uYXJudGl5YnNwZGtxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyMzgzODIsImV4cCI6MjEwMDgxNDM4Mn0.7WGJYQcx4mMzYeJSLgUYmVKb6icqLnZAMhFzcjycfhM';
+  // @ts-ignore
+  const innerTx = TransactionBuilder.fromXDR(signedTxXdr, NETWORK_PASSPHRASE);
   
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || fallbackUrl;
-  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || fallbackAnon;
+  const tx = TransactionBuilder.buildFeeBumpTransaction(
+    sponsorKeypair,
+    BASE_FEE,
+    innerTx as any,
+    NETWORK_PASSPHRASE
+  );
   
-  const baseUrl = isLocalhost ? '/api/supabase' : supabaseUrl;
-  
-  const response = await fetch(`${baseUrl}/functions/v1/sponsor-tx`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${anonKey}`
-    },
-    body: JSON.stringify({ signedTxXdr }) // Must match the backend variable name
-  });
-  
-  const data = await response.json();
-  if (!data.success) {
-    throw new Error(data.error || "Failed to sponsor transaction");
-  }
-  return data.xdr; // Must match the backend response variable
+  tx.sign(sponsorKeypair);
+  return tx.toXDR();
 }
 
 /** Shared RPC server instance */
