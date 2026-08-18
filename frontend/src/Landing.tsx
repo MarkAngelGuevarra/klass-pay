@@ -66,6 +66,20 @@ export default function Landing() {
           >
             📊 Treasurer Analytics
           </button>
+          <button 
+            className="btn btn--secondary" 
+            style={{ 
+              background: 'transparent', 
+              border: 'none', 
+              color: 'var(--text)', 
+              padding: '0.5rem 1rem', 
+              fontWeight: 500,
+              fontSize: '0.9rem'
+            }} 
+            onClick={() => navigate('/analytics')}
+          >
+            📈 Protocol Analytics
+          </button>
           <ThemeToggle />
           <button className="btn" style={{ width: 'auto', padding: '0.5rem 1.5rem', borderRadius: '20px' }} onClick={() => navigate('/app')}>
             Launch App

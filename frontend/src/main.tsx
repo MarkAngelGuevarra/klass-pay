@@ -26,6 +26,8 @@ import {
 } from 'lucide-react';
 import App from './App';
 import Landing from './Landing';
+import PaymentHistory from './PaymentHistory';
+import AnalyticsDashboard from './AnalyticsDashboard';
 import ThemeToggle from './ThemeToggle';
 import './index.css';
 import './ui.css';
@@ -1670,6 +1672,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<Landing />} />
         <Route path="/app" element={<App />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/analytics" element={<AnalyticsDashboard />} />
       </Routes>
     </BrowserRouter>
     <Analytics />

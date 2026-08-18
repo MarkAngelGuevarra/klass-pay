@@ -57,6 +57,16 @@ export const getBillMetadata = async (billId: number): Promise<BillMetadata | nu
   return null;
 };
 
+export const getAllBills = async (): Promise<(BillMetadata & { id: string })[]> => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "bills"));
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as BillMetadata & { id: string }));
+  } catch (e) {
+    console.error("Error fetching all bills:", e);
+    return [];
+  }
+};
+
 export const getAllBillsMetadata = async (): Promise<Array<{ id: number; metadata: BillMetadata }>> => {
   try {
     const querySnapshot = await getDocs(collection(db, "bills"));

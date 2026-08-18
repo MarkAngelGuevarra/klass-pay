@@ -346,29 +346,48 @@ export default function App() {
         )}
       </AnimatePresence>
       <div className="header" style={{ position: 'relative' }}>
-        <button
-          onClick={() => navigate('/dashboard')}
-          className="btn"
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: 'auto',
-            padding: '0.45rem 0.9rem',
-            fontSize: '0.85rem',
-            background: 'rgba(139, 92, 246, 0.15)',
-            border: '1px solid rgba(139, 92, 246, 0.3)',
-            color: 'var(--primary)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.4rem',
-            borderRadius: '12px',
-            cursor: 'pointer',
-            fontWeight: 600,
-          }}
-        >
-          📊 Treasurer Dashboard
-        </button>
+        <div style={{ position: 'absolute', top: 0, left: 0, display: 'flex', gap: '10px' }}>
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="btn"
+            style={{
+              width: 'auto',
+              padding: '0.45rem 0.9rem',
+              fontSize: '0.85rem',
+              background: 'rgba(139, 92, 246, 0.15)',
+              border: '1px solid rgba(139, 92, 246, 0.3)',
+              color: 'var(--primary)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              borderRadius: '12px',
+              cursor: 'pointer',
+              fontWeight: 600,
+            }}
+          >
+            📊 Treasurer Dashboard
+          </button>
+          <button
+            onClick={() => navigate('/analytics')}
+            className="btn"
+            style={{
+              width: 'auto',
+              padding: '0.45rem 0.9rem',
+              fontSize: '0.85rem',
+              background: 'rgba(59, 130, 246, 0.15)',
+              border: '1px solid rgba(59, 130, 246, 0.3)',
+              color: '#3B82F6',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              borderRadius: '12px',
+              cursor: 'pointer',
+              fontWeight: 600,
+            }}
+          >
+            📈 Protocol Analytics
+          </button>
+        </div>
         <ThemeToggle style={{ position: 'absolute', top: 0, right: 0 }} />
         <h1 onClick={goHome} style={{cursor: 'pointer'}}>💸 KlassPay</h1>
         <p>The premium split-payment engine for students.</p>
