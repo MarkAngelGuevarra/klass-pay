@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useWallet } from './wallet';
 import { simulate, invokeWrite, BillInfo } from './sorobanClient';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,14 +9,15 @@ import ThemeToggle from './ThemeToggle';
 
 export default function App() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   // FIXED: Destructure the correct variables from wallet.ts
   const { address, connect, signXDR, network } = useWallet();
   const isConnected = !!address;
 
-  // Read ?bill=1234 from URL
-  const searchParams = new URLSearchParams(window.location.search);
+  // Read ?bill=1234 from URL with safe validation
   const billParam = searchParams.get('bill');
-  const initialBillId = billParam ? parseInt(billParam) : null;
+  const parsed = billParam ? parseInt(billParam, 10) : null;
+  const initialBillId = parsed && !isNaN(parsed) && parsed > 0 ? parsed : null;
 
   const [currentBillId, setCurrentBillId] = useState<number | null>(initialBillId);
   const [bill, setBill] = useState<BillInfo | null>(null);
@@ -38,6 +39,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   
   const [modalOpen, setModalOpen] = useState(false);
   const [modalAction, setModalAction] = useState<'create' | 'pay' | null>(null);
@@ -49,9 +51,26 @@ export default function App() {
   const [isDepositing, setIsDepositing] = useState(false);
 
   const showToast = (msg: string) => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
     setToastMsg(msg);
-    setTimeout(() => setToastMsg(null), 3000);
+    toastTimerRef.current = setTimeout(() => setToastMsg(null), 3000);
   };
+
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    };
+  }, []);
+
+  // Sync URL search params to state
+  useEffect(() => {
+    const billParam = searchParams.get('bill');
+    const parsed = billParam ? parseInt(billParam, 10) : null;
+    const validId = parsed && !isNaN(parsed) && parsed > 0 ? parsed : null;
+    if (validId !== currentBillId) {
+      setCurrentBillId(validId);
+    }
+  }, [searchParams]);
 
   // Fetch bill automatically if we have an ID and wallet
   useEffect(() => {
@@ -69,8 +88,17 @@ export default function App() {
     return () => clearInterval(intervalId);
   }, [isConnected, address, currentBillId]);
 
+  const handleConnectWallet = async () => {
+    try {
+      await connect();
+    } catch (err: any) {
+      console.error('Freighter connection failed:', err);
+      setError(err?.message || 'Failed to connect Freighter wallet.');
+    }
+  };
+
   const handleGetBill = async (id: number) => {
-    if (!address) return;
+    if (!address || isNaN(id)) return;
     try {
       const args = [{ value: id, type: 'u32' }];
       const b = await simulate('get', address, args);
@@ -78,11 +106,9 @@ export default function App() {
       
       // Fetch Firebase Metadata
       const meta = await getBillMetadata(id);
-      if (meta) {
-        setBillMetadata(meta);
-        if (meta.currency) {
-          setPayCurrency(meta.currency);
-        }
+      setBillMetadata(meta || null);
+      if (meta?.currency) {
+        setPayCurrency(meta.currency);
       }
       
       setError(null);
@@ -108,7 +134,14 @@ export default function App() {
   };
 
   const executeCreate = async () => {
-    if (!address || !signXDR) return;
+    if (!address) {
+      setError('Please connect your Freighter wallet first.');
+      return;
+    }
+    if (!signXDR) {
+      setError('Wallet signer not initialized. Please ensure Freighter is connected and unlocked.');
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
@@ -128,8 +161,7 @@ export default function App() {
       await saveBillMetadata(newBillId, billName || 'Class Fund', billDescription || 'Collected via KlassPay', selectedCurrency);
 
       setCurrentBillId(newBillId);
-      // Update the URL without reloading the page
-      window.history.pushState({}, '', `?bill=${newBillId}`);
+      setSearchParams({ bill: String(newBillId) });
       await handleGetBill(newBillId);
     } catch (e: any) {
       setError('Create error: ' + e.message);
@@ -146,7 +178,11 @@ export default function App() {
   };
 
   const executePay = async () => {
-    if (!address || currentBillId === null || !signXDR) return;
+    if (!address || currentBillId === null) return;
+    if (!signXDR) {
+      setError('Wallet signer not initialized. Please ensure Freighter is connected and unlocked.');
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
@@ -176,23 +212,29 @@ export default function App() {
     }
   };
 
-  const copyShareLink = () => {
-    const link = `${window.location.origin}/?bill=${currentBillId}`;
-    navigator.clipboard.writeText(link);
-    showToast('Share link copied to clipboard! Send this to your users!');
+  const copyShareLink = async () => {
+    const link = `${window.location.origin}/app?bill=${currentBillId}`;
+    try {
+      await navigator.clipboard.writeText(link);
+      showToast('Share link copied to clipboard! Send this to your users!');
+    } catch (err) {
+      console.warn('Clipboard write failed:', err);
+      showToast(`Bill #${currentBillId} share link: ${link}`);
+    }
   };
 
   const handleJoin = () => {
-    const id = parseInt(joinBillId);
-    if (isNaN(id)) return;
+    const id = parseInt(joinBillId, 10);
+    if (isNaN(id) || id <= 0) return;
     setCurrentBillId(id);
-    window.history.pushState({}, '', `?bill=${id}`);
+    setSearchParams({ bill: String(id) });
   };
 
   const goHome = () => {
     setCurrentBillId(null);
     setBill(null);
-    window.history.pushState({}, '', '/');
+    setBillMetadata(null);
+    setSearchParams({});
   };
 
   const handleWithdraw = () => {
@@ -345,52 +387,56 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="header" style={{ position: 'relative' }}>
-        <div style={{ position: 'absolute', top: 0, left: 0, display: 'flex', gap: '10px' }}>
-          <button
-            onClick={() => navigate('/dashboard')}
-            className="btn"
-            style={{
-              width: 'auto',
-              padding: '0.45rem 0.9rem',
-              fontSize: '0.85rem',
-              background: 'rgba(139, 92, 246, 0.15)',
-              border: '1px solid rgba(139, 92, 246, 0.3)',
-              color: 'var(--primary)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              fontWeight: 600,
-            }}
-          >
-            📊 Treasurer Dashboard
-          </button>
-          <button
-            onClick={() => navigate('/analytics')}
-            className="btn"
-            style={{
-              width: 'auto',
-              padding: '0.45rem 0.9rem',
-              fontSize: '0.85rem',
-              background: 'rgba(59, 130, 246, 0.15)',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
-              color: '#3B82F6',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              fontWeight: 600,
-            }}
-          >
-            📈 Protocol Analytics
-          </button>
+      <div className="header" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', position: 'relative' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="btn"
+              style={{
+                width: 'auto',
+                padding: '0.45rem 0.9rem',
+                fontSize: '0.85rem',
+                background: 'rgba(139, 92, 246, 0.15)',
+                border: '1px solid rgba(139, 92, 246, 0.3)',
+                color: 'var(--primary)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                borderRadius: '12px',
+                cursor: 'pointer',
+                fontWeight: 600,
+              }}
+            >
+              📊 Treasurer Dashboard
+            </button>
+            <button
+              onClick={() => navigate('/analytics')}
+              className="btn"
+              style={{
+                width: 'auto',
+                padding: '0.45rem 0.9rem',
+                fontSize: '0.85rem',
+                background: 'rgba(59, 130, 246, 0.15)',
+                border: '1px solid rgba(59, 130, 246, 0.3)',
+                color: '#3B82F6',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                borderRadius: '12px',
+                cursor: 'pointer',
+                fontWeight: 600,
+              }}
+            >
+              📈 Protocol Analytics
+            </button>
+          </div>
+          <ThemeToggle />
         </div>
-        <ThemeToggle style={{ position: 'absolute', top: 0, right: 0 }} />
-        <h1 onClick={goHome} style={{cursor: 'pointer'}}>💸 KlassPay</h1>
-        <p>The premium split-payment engine for students.</p>
+        <div style={{ textAlign: 'center' }}>
+          <h1 onClick={goHome} style={{ cursor: 'pointer', margin: '0 0 0.5rem 0' }}>💸 KlassPay</h1>
+          <p style={{ margin: 0 }}>The premium split-payment engine for students.</p>
+        </div>
       </div>
 
       <div className="wallet-bar">
@@ -410,7 +456,7 @@ export default function App() {
             </button>
           </div>
         ) : (
-          <button className="btn" style={{ width: 'auto', padding: '0.5rem 1rem' }} onClick={connect}>
+          <button className="btn" style={{ width: 'auto', padding: '0.5rem 1rem' }} onClick={handleConnectWallet}>
             Connect Freighter
           </button>
         )}
@@ -427,7 +473,7 @@ export default function App() {
           <div className="card" style={{ textAlign: 'center', marginBottom: '2rem' }}>
             <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Welcome to KlassPay</h2>
             <p style={{ color: 'var(--text-muted)' }}>The premium split-payment engine for students. Collect funds with zero gas fees.</p>
-            <button className="btn" style={{ width: 'auto', padding: '0.8rem 2rem', marginTop: '1.5rem', background: 'linear-gradient(90deg, #005CEE, #8B5CF6)' }} onClick={connect}>
+            <button className="btn" style={{ width: 'auto', padding: '0.8rem 2rem', marginTop: '1.5rem', background: 'linear-gradient(90deg, #005CEE, #8B5CF6)' }} onClick={handleConnectWallet}>
               Connect Wallet to Start
             </button>
           </div>
@@ -828,7 +874,7 @@ export default function App() {
                     </div>
                     <ul className="payer-list">
                       {bill.payers.map((p, i) => (
-                        <li key={i}>{p.substring(0, 12)}...{p.slice(-12)}</li>
+                        <li key={`${p}-${i}`}>{p.substring(0, 12)}...{p.slice(-12)}</li>
                       ))}
                       {bill.payers.length === 0 && <p style={{color: 'var(--text-muted)'}}>No one has paid yet.</p>}
                     </ul>
@@ -849,24 +895,6 @@ export default function App() {
       )}
 
       {error && <div className="msg msg--error">{error}</div>}
-      
-      {toastMsg && (
-        <div style={{
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          background: 'var(--success)',
-          color: 'white',
-          padding: '1rem 2rem',
-          borderRadius: '8px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-          animation: 'slideIn 0.3s ease-out',
-          zIndex: 1000,
-          fontWeight: 'bold'
-        }}>
-          {toastMsg}
-        </div>
-      )}
 
       <AnimatePresence>
         {isWithdrawing && (

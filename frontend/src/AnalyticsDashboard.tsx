@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { Trophy, TrendingUp, Users, Activity, ExternalLink } from 'lucide-react';
 import { getAllBillsMetadata, BillMetadata } from './firebase';
 
 const AnalyticsDashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [bills, setBills] = useState<Array<{ id: number; metadata: BillMetadata }>>([]);
 
@@ -71,7 +73,7 @@ const AnalyticsDashboard: React.FC = () => {
           <button 
             className="btn" 
             style={{ padding: '0.5rem', background: 'transparent', border: '1px solid var(--glass-border)', color: 'var(--text-muted)' }}
-            onClick={() => window.location.href = '/'}
+            onClick={() => navigate('/')}
           >
             ← Back
           </button>
@@ -150,7 +152,7 @@ const AnalyticsDashboard: React.FC = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {bills.slice(0, 8).map((bill, index) => (
                 <motion.div 
-                  key={bill.id}
+                  key={`${bill.id}-${index}`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}

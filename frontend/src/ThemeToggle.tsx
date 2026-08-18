@@ -4,15 +4,23 @@ import { Sun, Moon } from 'lucide-react';
 
 export default function ThemeToggle({ style }: { style?: React.CSSProperties }) {
   const [isDark, setIsDark] = useState<boolean>(() => {
-    const saved = localStorage.getItem('klasspay_theme');
-    return saved ? saved === 'dark' : true;
+    try {
+      const saved = localStorage.getItem('klasspay_theme');
+      return saved ? saved === 'dark' : true;
+    } catch {
+      return true;
+    }
   });
 
   useEffect(() => {
     const theme = isDark ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', theme);
     document.body.setAttribute('data-theme', theme);
-    localStorage.setItem('klasspay_theme', theme);
+    try {
+      localStorage.setItem('klasspay_theme', theme);
+    } catch {
+      // Ignore private browsing / sandboxed storage exceptions
+    }
   }, [isDark]);
 
   const toggleTheme = () => {

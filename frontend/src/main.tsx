@@ -4,7 +4,7 @@ import { Buffer } from 'buffer';
 import React, { useState, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Analytics } from "@vercel/analytics/react";
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   TrendingUp,
@@ -352,10 +352,10 @@ export function Dashboard() {
         (statusFilter === 'ACTIVE' && !b.settled);
       const matchesSearch =
         searchQuery === '' ||
-        b.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        b.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        b.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        b.id.toString().includes(searchQuery);
+        (b.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (b.description || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (b.category || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (b.id != null ? b.id.toString() : '').includes(searchQuery);
 
       return matchesAsset && matchesStatus && matchesSearch;
     });
@@ -367,9 +367,9 @@ export function Dashboard() {
       const matchesAsset = assetFilter === 'ALL' || a.currency === assetFilter;
       const matchesSearch =
         searchQuery === '' ||
-        a.billName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        a.contributor.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        a.billId.toString().includes(searchQuery);
+        (a.billName || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (a.contributor || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (a.billId != null ? a.billId.toString() : '').includes(searchQuery);
       return matchesAsset && matchesSearch;
     });
   }, [activities, assetFilter, searchQuery]);
@@ -398,13 +398,16 @@ export function Dashboard() {
           ? d.xlmVolume
           : d.totalUsdEquivalent;
 
+      const denomX = TIMELINE_DATA.length - 1 || 1;
+      const denomY = maxVal - minVal || 1;
+
       const x =
         paddingX +
-        (index / (TIMELINE_DATA.length - 1)) * (chartWidth - paddingX * 2);
+        (index / denomX) * (chartWidth - paddingX * 2);
       const y =
         chartHeight -
         paddingY -
-        ((val - minVal) / (maxVal - minVal)) * (chartHeight - paddingY * 2);
+        ((val - minVal) / denomY) * (chartHeight - paddingY * 2);
 
       return { x, y, data: d, val };
     });
@@ -1663,18 +1666,96 @@ export function Dashboard() {
   );
 }
 
-export default Dashboard;
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('KlassPay runtime error caught by ErrorBoundary:', error, errorInfo);
+  }
+
+  handleReload = () => {
+    this.setState({ hasError: false, error: null });
+    window.location.href = '/';
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'var(--bg-main, #0b0f19)',
+          color: '#ffffff',
+          padding: '2rem',
+          textAlign: 'center'
+        }}>
+          <div style={{
+            background: 'rgba(239, 68, 68, 0.1)',
+            border: '1px solid rgba(239, 68, 68, 0.3)',
+            borderRadius: '16px',
+            padding: '2.5rem',
+            maxWidth: '500px',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
+          }}>
+            <h2 style={{ color: '#ef4444', margin: '0 0 1rem 0' }}>Something went wrong</h2>
+            <p style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: 1.6, margin: '0 0 1.5rem 0' }}>
+              An unexpected error occurred in the application. You can return to the home page or reload the app.
+            </p>
+            <button
+              className="btn"
+              onClick={this.handleReload}
+              style={{
+                background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)',
+                color: '#ffffff',
+                padding: '0.75rem 2rem',
+                borderRadius: '50px',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: 600
+              }}
+            >
+              Return Home
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/app" element={<App />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/analytics" element={<AnalyticsDashboard />} />
-      </Routes>
-    </BrowserRouter>
-    <Analytics />
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/app" element={<App />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/analytics" element={<AnalyticsDashboard />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+      <Analytics />
+    </ErrorBoundary>
   </React.StrictMode>,
 );

@@ -30,19 +30,34 @@ const NETWORK_PASSPHRASE = Networks.PUBLIC;
 const BASE_FEE = '100';
 const TIMEOUT_SECONDS = 300; // Increased to 5 minutes to prevent txTOO_LATE (-3) error if user takes time to sign
 
+export const SOROBAN_CONTRACT_ERRORS: Record<number, string> = {
+  1: 'Bill ID already exists on-chain. Please generate a new Bill ID.',
+  2: 'Bill not found on the Stellar network.',
+  3: 'Payment exceeds the remaining required balance for this bill.',
+  4: 'This bill has already been fully funded and settled.',
+  5: 'Amount must be greater than zero.',
+  6: 'Unauthorized: Only the bill organizer can perform this operation.',
+};
+
 async function getSponsoredTransaction(signedTxXdr: string): Promise<string> {
-  // The Supabase Edge Function is currently paused (ENOTFOUND), causing 'Failed to fetch' on Vercel.
-  // To ensure the gasless demo works, we perform the FeeBump locally on the client.
-  const sponsorSecret = 'SARQ5OIFEETQHSQB6JR2SBJIVXRIIHPU7TZD5BUI6WDNN6QZKEYNEQHS';
-  const sponsorKeypair = Keypair.fromSecret(sponsorSecret);
+  const sponsorSecret = import.meta.env.VITE_SPONSOR_SECRET as string | undefined;
+  if (!sponsorSecret || sponsorSecret.trim().length === 0) {
+    // If no sponsor key is configured, return the signed transaction as-is (user pays fee)
+    return signedTxXdr;
+  }
+
+  const sponsorKeypair = Keypair.fromSecret(sponsorSecret.trim());
   
   // @ts-ignore
-  const innerTx = TransactionBuilder.fromXDR(signedTxXdr, NETWORK_PASSPHRASE);
+  const innerTx = TransactionBuilder.fromXDR(signedTxXdr, NETWORK_PASSPHRASE) as any;
   
+  const innerFee = BigInt(innerTx.fee || '100');
+  const feeBumpFee = (innerFee + BigInt(BASE_FEE)).toString();
+
   const tx = TransactionBuilder.buildFeeBumpTransaction(
     sponsorKeypair,
-    BASE_FEE,
-    innerTx as any,
+    feeBumpFee,
+    innerTx,
     NETWORK_PASSPHRASE
   );
   
@@ -55,24 +70,31 @@ function getRpcServer(): SorobanRpc.Server {
   return new SorobanRpc.Server(RPC_URL);
 }
 
-/** Ensure a contract ID is available or throw a friendly error */
+export const DEFAULT_CONTRACT_ID = 'CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ';
+
+/** Ensure a contract ID is available or fallback to verified Mainnet default */
 function requireContract(): string {
   const id = getContractId();
-  if (!id) {
-    throw new Error(
-      `No contract ID configured. Deploy the contract from ${DEPLOY_HINT} and set VITE_CONTRACT_ID.`,
-    );
+  if (id && id.trim().length > 0) {
+    return id.trim();
   }
-  return id;
+  return DEFAULT_CONTRACT_ID;
 }
 
 /** Format an RPC / simulation error into a readable string */
-function formatRpcError(err: unknown): string {
+export function formatRpcError(err: unknown): string {
   if (err instanceof Error) {
     /* Pull out nested Soroban diagnostic info when available */
     const msg = err.message;
-    const match = msg.match(/HostError\(([^)]+)\)/);
-    if (match) return `Soroban HostError: ${match[1]}`;
+    const contractErrMatch = msg.match(/Error\(Contract,\s*#?(\d+)\)/);
+    if (contractErrMatch) {
+      const code = parseInt(contractErrMatch[1], 10);
+      if (SOROBAN_CONTRACT_ERRORS[code]) {
+        return SOROBAN_CONTRACT_ERRORS[code];
+      }
+    }
+    const hostErrMatch = msg.match(/HostError\(([^)]+)\)/);
+    if (hostErrMatch) return `Soroban HostError: ${hostErrMatch[1]}`;
     if (msg.includes('Transaction simulation failed')) {
       return `Simulation failed: ${msg}`;
     }
@@ -282,8 +304,9 @@ export async function invokeWrite(
   const startTime = Date.now();
   while (getResult.status === SorobanRpc.Api.GetTransactionStatus.NOT_FOUND) {
     if (Date.now() - startTime > 30_000) {
-      console.warn('Transaction confirmation timed out, assuming success for UI flow');
-      break;
+      throw new Error(
+        `Transaction confirmation timed out. Transaction hash: ${sendResult.hash}. Please check Stellar Expert: https://stellar.expert/explorer/public/tx/${sendResult.hash}`
+      );
     }
     await new Promise((r) => setTimeout(r, 2000));
     getResult = await server.getTransaction(sendResult.hash);
