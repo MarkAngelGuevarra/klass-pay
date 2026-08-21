@@ -36,22 +36,41 @@
 
 KlassPay solves a massive problem for university students and organizers: the awkward, stressful, and messy process of collecting money for group projects, class funds, or shared events. Instead of chasing classmates for cash or manual bank receipts, organizers can instantly generate a **Stellar-powered Bill ID** and share it with their peers.
 
-### 🔥 Level 5 Blue Belt Updates (August 2026)
-This month, KlassPay underwent a massive **Multi-Asset Analytics Update** to accelerate User Growth and Product Iteration:
-- **📊 Treasurer Analytics Dashboard (`/dashboard`):** A dedicated route for organizers featuring interactive SVG volume timeline charts and a live activity feed.
-- **💱 Multi-Asset USDC Simulation:** Organizers can explicitly toggle between **Native XLM** and **Stellar USDC** during bill creation. The frontend dynamically simulates and formats multi-token settlements across the entire UI while preserving Mainnet smart contract safety.
-- **🏆 Gamified Funding Milestones:** Integrated a `framer-motion` physics engine to render dynamic progress bars with glowing 50% halfway badges and 100% celebration banners to increase user retention.
+### 🚀 Level 5 Blue Belt Major Feature Release (August 2026)
+This month, KlassPay underwent a major architectural and feature expansion, delivering an enterprise-grade **Smart Invoicing, QR Settlement & Real-Time Analytics Engine**:
+
+1. **🧾 Dynamic QR Payment Terminal:**
+   - Built a high-fidelity QR Code payment engine powered by `qrcode.react`.
+   - Generates instant Stellar payment payload URIs (`web+stellar:pay`) and Freighter direct-links, enabling zero-friction 1-tap mobile settlements.
+
+2. **🧮 Interactive Split & Buffer/Tip Calculator:**
+   - Organizers can dynamically adjust participant counts, calculate exact per-person shares in real time, and configure organizer service fee/buffer tip presets (0%, 5%, 10%, 15%, 20%).
+   - Seamlessly converts between token balances and real-world fiat estimates (PHP / USD) at live Stellar DEX valuation.
+
+3. **🛡️ Official On-Chain Tax & Audit Receipt Generator:**
+   - Integrated a 1-click printable/exportable PDF settlement certificate for class treasurers and student organizations.
+   - Includes verified Soroban Mainnet contract links (`CCR4JWW...`), bill metadata, organizer signatures, timestamp, and contributor audit rosters.
+
+4. **📊 Real-Time Protocol Analytics Dashboard (`/analytics`):**
+   - Interactive `recharts` data visualizations displaying 7-day protocol volume trends, active settlement currencies, and live Firebase on-chain transaction feeds.
+
+5. **🔐 Web3 Hardening & Fault Resilience:**
+   - Top-level `ErrorBoundary` and fallback router.
+   - Verified Mainnet default contract fallback to prevent runtime misconfigurations.
+   - Comprehensive `SOROBAN_CONTRACT_ERRORS` translation layer mapping error codes 1–6 to user-friendly messages with Stellar Expert transaction hash links.
 
 ### Core Features
 - **Create Bills:** Deploy a custom Soroban smart contract to manage shared group funds.
 - **On-Chain Tracking:** Transparently show funding percentages, contributors, and the remaining balance.
+- **Smart QR & Invoicing:** Generate instant QR codes and export official PDF settlement receipts.
 - **Frictionless Gasless Payments:** Contributors pay their exact share via Freighter Wallet using XLM with zero gas fees paid by the user.
 - **Automated Settlement & GCash Offramp:** Once the target goal is met, funds lock into settled state, unlocking a 1-click fiat offramp into GCash for organizers.
 - **CSV Export & Record Keeping:** Class treasurers and project leads can export full contributor rosters directly to CSV for offline accounting.
 - **Dark/Light Mode:** Responsive UI/UX with modern glassmorphism, instant toast notifications, and themes built with CSS variables.
 
-### Security
+### Security & Audit
 - **Smart Contract Audit:** The project logic underwent a thorough security review and smart contract audit (see [`audit_report.md`](./audit_report.md)) to ensure funds are safe and protected against unauthorized withdrawals.
+- **Hardened Client Architecture:** Zero exposed secret keys, strict type-safe parameter validation, and URL injection defense.
 
 ---
 
