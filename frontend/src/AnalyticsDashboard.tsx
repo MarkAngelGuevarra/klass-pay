@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { Trophy, TrendingUp, Users, Activity, ExternalLink } from 'lucide-react';
+import { Trophy, TrendingUp, Users, Activity, ExternalLink, QrCode, FileText } from 'lucide-react';
 import { getAllBillsMetadata, BillMetadata } from './firebase';
+import { SmartInvoiceModal } from './SmartInvoiceModal';
 
 const AnalyticsDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [bills, setBills] = useState<Array<{ id: number; metadata: BillMetadata }>>([]);
+  const [selectedBillForInvoice, setSelectedBillForInvoice] = useState<{ id: number; metadata: BillMetadata } | null>(null);
+  const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
 
   useEffect(() => {
     const fetchAnalytics = async () => {
@@ -68,11 +71,11 @@ const AnalyticsDashboard: React.FC = () => {
       className="analytics-container"
       style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto', minHeight: '100vh' }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <button 
             className="btn" 
-            style={{ padding: '0.5rem', background: 'transparent', border: '1px solid var(--glass-border)', color: 'var(--text-muted)' }}
+            style={{ padding: '0.5rem 1rem', background: 'transparent', border: '1px solid var(--glass-border)', color: 'var(--text-muted)', borderRadius: '12px' }}
             onClick={() => navigate('/')}
           >
             ← Back
@@ -81,9 +84,30 @@ const AnalyticsDashboard: React.FC = () => {
             <h1 style={{ margin: 0, fontSize: '2.5rem', fontWeight: 800, background: 'linear-gradient(90deg, #3B82F6, #8B5CF6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               Protocol Analytics
             </h1>
-            <p style={{ margin: 0, color: 'var(--text-muted)' }}>Real-time Mainnet Settlement Data</p>
+            <p style={{ margin: 0, color: 'var(--text-muted)' }}>Real-time Mainnet Settlement Data & Audit Trail</p>
           </div>
         </div>
+        <button
+          onClick={() => {
+            setSelectedBillForInvoice(bills[0] || null);
+            setIsInvoiceOpen(true);
+          }}
+          style={{
+            padding: '0.6rem 1.25rem',
+            borderRadius: '14px',
+            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(59, 130, 246, 0.15))',
+            border: '1px solid rgba(16, 185, 129, 0.4)',
+            color: '#34D399',
+            fontWeight: 700,
+            fontSize: '0.9rem',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
+        >
+          🧾 Open Smart Invoice Terminal
+        </button>
       </div>
 
       {loading ? (
@@ -156,10 +180,20 @@ const AnalyticsDashboard: React.FC = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '12px' }}
+                  whileHover={{ scale: 1.01, background: 'rgba(255,255,255,0.06)' }}
+                  onClick={() => {
+                    setSelectedBillForInvoice(bill);
+                    setIsInvoiceOpen(true);
+                  }}
+                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', cursor: 'pointer', border: '1px solid var(--glass-border)' }}
                 >
                   <div>
-                    <h4 style={{ margin: '0 0 0.25rem 0' }}>{bill.metadata.name}</h4>
+                    <h4 style={{ margin: '0 0 0.25rem 0', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      {bill.metadata.name}
+                      <span style={{ fontSize: '0.7rem', color: '#10B981', background: 'rgba(16, 185, 129, 0.15)', padding: '2px 6px', borderRadius: '8px' }}>
+                        🧾 View Receipt
+                      </span>
+                    </h4>
                     <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>{bill.metadata.description}</p>
                   </div>
                   <div style={{ textAlign: 'right' }}>
@@ -182,6 +216,20 @@ const AnalyticsDashboard: React.FC = () => {
           </div>
         </>
       )}
+
+      <SmartInvoiceModal
+        isOpen={isInvoiceOpen}
+        onClose={() => setIsInvoiceOpen(false)}
+        billId={selectedBillForInvoice?.id || 1042}
+        billName={selectedBillForInvoice?.metadata.name || 'Protocol Settlement Fund'}
+        billDescription={selectedBillForInvoice?.metadata.description || 'Verified Soroban Smart Contract Payment'}
+        organizerAddress="GDHK4Y366J7A7XG7K92LAZ67OPQ..."
+        totalTarget={250}
+        totalFunded={250}
+        currency={selectedBillForInvoice?.metadata.currency || 'XLM'}
+        settled={true}
+        payers={["GCBX241PQ...92LA", "GBXY77KM...14PQ", "GDHK4Y36...88ZZ"]}
+      />
     </motion.div>
   );
 };

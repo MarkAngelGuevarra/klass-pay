@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Wallet, Zap, Shield, ChevronRight, AlertTriangle, CheckCircle, MessageSquare } from 'lucide-react';
+import { Wallet, Zap, Shield, ChevronRight, AlertTriangle, CheckCircle, MessageSquare, QrCode, FileText, Sparkles } from 'lucide-react';
 import VideoDemo from './VideoDemo';
 import PaymentHistory from './PaymentHistory';
 import ThemeToggle from './ThemeToggle';
+import { SmartInvoiceModal } from './SmartInvoiceModal';
 
 export default function Landing() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ Name: '', Email: '', Message: '' });
   const [status, setStatus] = useState('');
+  const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,24 +46,24 @@ export default function Landing() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       {/* Navbar */}
-      <header style={{ padding: '1.5rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1 style={{ margin: 0, fontSize: '1.5rem', background: 'linear-gradient(90deg, var(--primary), var(--secondary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 2rem', borderBottom: '1px solid var(--glass-border)', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', flexWrap: 'wrap', gap: '1rem' }}>
+        <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }} onClick={() => navigate('/')}>
           💸 KlassPay
         </h1>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           <button 
             className="btn" 
             style={{ 
               width: 'auto', 
-              padding: '0.5rem 1.25rem', 
-              borderRadius: '20px', 
+              padding: '0.45rem 1rem', 
+              borderRadius: '16px', 
               background: 'var(--glass-bg)', 
               border: '1px solid var(--glass-border)', 
               color: 'var(--text-main)', 
               display: 'flex', 
               alignItems: 'center', 
               gap: '0.4rem',
-              fontSize: '0.9rem'
+              fontSize: '0.85rem'
             }} 
             onClick={() => navigate('/dashboard')}
           >
@@ -73,13 +75,32 @@ export default function Landing() {
               background: 'transparent', 
               border: 'none', 
               color: 'var(--text)', 
-              padding: '0.5rem 1rem', 
+              padding: '0.45rem 0.8rem', 
               fontWeight: 500,
-              fontSize: '0.9rem'
+              fontSize: '0.85rem'
             }} 
             onClick={() => navigate('/analytics')}
           >
             📈 Protocol Analytics
+          </button>
+          <button 
+            className="btn" 
+            style={{ 
+              width: 'auto', 
+              padding: '0.45rem 1rem', 
+              borderRadius: '16px', 
+              background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(59, 130, 246, 0.15))', 
+              border: '1px solid rgba(16, 185, 129, 0.35)', 
+              color: '#34D399', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '0.4rem',
+              fontSize: '0.85rem',
+              fontWeight: 600
+            }} 
+            onClick={() => setIsInvoiceOpen(true)}
+          >
+            🧾 Smart Invoicing
           </button>
           <ThemeToggle />
           <button className="btn" style={{ width: 'auto', padding: '0.5rem 1.5rem', borderRadius: '20px' }} onClick={() => navigate('/app')}>
@@ -108,7 +129,25 @@ export default function Landing() {
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button className="btn" style={{ width: 'auto', padding: '1rem 2rem', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }} onClick={() => navigate('/app')}>
-              Get Started <ChevronRight size={20} />
+              Launch App <ChevronRight size={20} />
+            </button>
+            <button 
+              className="btn" 
+              style={{ 
+                width: 'auto', 
+                padding: '1rem 2rem', 
+                fontSize: '1.1rem', 
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(59, 130, 246, 0.15))', 
+                border: '1px solid rgba(16, 185, 129, 0.4)', 
+                color: '#34D399', 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '0.5rem',
+                fontWeight: 600
+              }} 
+              onClick={() => setIsInvoiceOpen(true)}
+            >
+              🧾 Smart Invoice & QR Splitter
             </button>
             <button 
               className="btn" 
@@ -127,11 +166,6 @@ export default function Landing() {
             >
               📊 Treasurer Analytics
             </button>
-            <a href="https://github.com" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
-              <button className="btn" style={{ width: 'auto', padding: '1rem 2rem', fontSize: '1.1rem', background: 'transparent', border: '1px solid var(--glass-border)', color: 'var(--text)' }}>
-                View GitHub
-              </button>
-            </a>
           </div>
         </motion.div>
 
@@ -257,7 +291,20 @@ export default function Landing() {
         </motion.div>
 
       </main>
-      {/* End of Landing page */}
+      
+      <SmartInvoiceModal
+        isOpen={isInvoiceOpen}
+        onClose={() => setIsInvoiceOpen(false)}
+        billId={1042}
+        billName="Stellar APAC Community Fund"
+        billDescription="Interactive Split Bill & Live Stellar Settlement Terminal"
+        organizerAddress="GDHK4Y366J7A7XG7K92LAZ67OPQ..."
+        totalTarget={250}
+        totalFunded={250}
+        currency="XLM"
+        settled={true}
+        payers={["GCBX241PQ...92LA", "GBXY77KM...14PQ", "GDHK4Y36...88ZZ"]}
+      />
     </div>
   );
 }

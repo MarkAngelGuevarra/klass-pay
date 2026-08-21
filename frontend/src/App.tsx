@@ -3,9 +3,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useWallet } from './wallet';
 import { simulate, invokeWrite, BillInfo } from './sorobanClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Trophy, Zap } from 'lucide-react';
+import { Sparkles, Trophy, Zap, QrCode, FileText, Calculator } from 'lucide-react';
 import { saveBillMetadata, getBillMetadata, BillMetadata } from './firebase';
 import ThemeToggle from './ThemeToggle';
+import { SmartInvoiceModal } from './SmartInvoiceModal';
 
 export default function App() {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ export default function App() {
   
   const [modalOpen, setModalOpen] = useState(false);
   const [modalAction, setModalAction] = useState<'create' | 'pay' | null>(null);
+  const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
   const [modalInput, setModalInput] = useState('');
   
   // GCash Deposit State
@@ -430,6 +432,26 @@ export default function App() {
             >
               📈 Protocol Analytics
             </button>
+            <button
+              onClick={() => setIsInvoiceOpen(true)}
+              className="btn"
+              style={{
+                width: 'auto',
+                padding: '0.45rem 0.9rem',
+                fontSize: '0.85rem',
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(59, 130, 246, 0.15))',
+                border: '1px solid rgba(16, 185, 129, 0.35)',
+                color: '#34D399',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                borderRadius: '12px',
+                cursor: 'pointer',
+                fontWeight: 600,
+              }}
+            >
+              🧾 Smart Invoice & QR
+            </button>
           </div>
           <ThemeToggle />
         </div>
@@ -649,13 +671,33 @@ export default function App() {
       {isConnected && currentBillId !== null && (
         <>
           <div className="card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                <h2 style={{ margin: 0 }}>
                  {billMetadata ? `📋 ${billMetadata.name}` : `📊 Bill #${currentBillId}`}
                </h2>
-               <button className="status status--ok" onClick={copyShareLink} style={{ cursor: 'pointer', background: 'transparent' }}>
-                 🔗 Copy Link
-               </button>
+               <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                 <button 
+                   onClick={() => setIsInvoiceOpen(true)}
+                   style={{
+                     padding: '0.35rem 0.8rem',
+                     borderRadius: '10px',
+                     border: '1px solid rgba(16, 185, 129, 0.4)',
+                     background: 'rgba(16, 185, 129, 0.15)',
+                     color: '#34D399',
+                     fontSize: '0.85rem',
+                     fontWeight: 600,
+                     cursor: 'pointer',
+                     display: 'flex',
+                     alignItems: 'center',
+                     gap: '0.35rem'
+                   }}
+                 >
+                   🧾 Smart Invoice & QR
+                 </button>
+                 <button className="status status--ok" onClick={copyShareLink} style={{ cursor: 'pointer', background: 'transparent' }}>
+                   🔗 Copy Link
+                 </button>
+               </div>
             </div>
             {billMetadata && (
               <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontStyle: 'italic' }}>
@@ -959,6 +1001,20 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <SmartInvoiceModal
+        isOpen={isInvoiceOpen}
+        onClose={() => setIsInvoiceOpen(false)}
+        billId={currentBillId || 1042}
+        billName={billMetadata?.name || 'Classroom Fund Project'}
+        billDescription={billMetadata?.description || 'Collected via KlassPay on Stellar Soroban'}
+        organizerAddress={bill?.organizer || address || 'GDHK4Y366J7A7XG7K92LA...'}
+        totalTarget={bill?.target || target || 100}
+        totalFunded={bill?.funded || 0}
+        currency={selectedCurrency || 'XLM'}
+        settled={bill?.settled || false}
+        payers={bill?.payers || []}
+      />
     </div>
   );
 }
