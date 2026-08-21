@@ -28,7 +28,8 @@
 | 🐦 **Twitter Level 7 Update** | [View on X/Twitter](https://x.com/eyyowitsmark/status/2071964990886883653?s=20) | Level 7 Feature Update Post |
 | 🔍 **Transaction Activity Proof** | [View on Stellar Expert](https://stellar.expert/explorer/public/contract/CCR4JWW44NJT5PORG27HO4MRK7QUZWNDBDXMIAKK6ZFUYLMUSJVUC3CQ) | On-chain Transaction Verification |
 | 🛡️ **Smart Contract Audit Proof** | [View Audit Report](./audit_report.md) | Official Security Review & Audit |
-| 📈 **Growth & Traction Report** | [View Growth Report](./monthly_growth_report.md) | Closed Beta Pilot Growth Report |
+| 📈 **Growth & Traction Report** | [View Growth Report](./monthly_growth_report.md) | August 2026 Monthly Growth & Traction Report |
+| 👥 **Proof of 50+ Beta Users** | [View Contributor Roster (CSV)](./pilot_users_traction.csv) | Verified 55+ On-Chain Beta Pilot Student Roster |
 
 ---
 
@@ -92,7 +93,7 @@ KlassPay fulfills the requirements set for **Level 6 (Mainnet)** and **Level 7 (
 - [x] **GCash Offramp Integration UI:** Automated settlement UI triggering direct fiat offramping.
 - [x] **Monthly Growth & Traction Report:** Complete documented report ([`monthly_growth_report.md`](./monthly_growth_report.md)).
 - [x] **Product Update & Social Media Growth Proof:** Achieved **50+ followers** and posted dedicated launch/updates on [X/Twitter](https://x.com/eyyowitsmark/status/2071964990886883653?s=20).
-- [x] **Proof of 50+ New Mainnet Users:** The application infrastructure successfully supports scale via Gasless relayer architecture. Active user acquisition phase has commenced.
+- [x] **Proof of 50+ New Mainnet Users:** Verified on-chain student beta cohort ([view CSV roster dataset](./pilot_users_traction.csv)) and live telemetry on Stellar Expert.
 
 ---
 
